@@ -2,9 +2,11 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](http://jpkangas.users.cs.helsinki.fi/vallila/)
+* [Linkki Vallila-sovellukseeni](http://jpkangas.users.cs.helsinki.fi/vallila/)
 * [Linkki dokumentaatiooni](https://www.github.com/pekoe09/Tsoha-Bootstrap/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Palvelubisnes.html) 
+Aiheena on valmiina ollut aihe ["Palvelubisnes"](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Palvelubisnes.html).
+
+Valmisaiheeseen verrattuna toteutettavassa sovelluksessa asiakkaan tulee kuitenkin rekisteröityä voidakseen varata palveluajan. Asiakkaasta tallennetaan perusyhteystiedot ja rekisteröitynyt asiakas voi sisäänkirjauduttuaan myös selata tekemiään varauksia ja peruuttaa niitä (jos varausaika on tulevaisuudessa). Sisäänkirjautumaton asiakas voi vain selata palveluiden tietoja sekä firman yleisesittelyä. Työntekijät voivat etsiä asiakkaiden varauksia ja peruuttaa niitä.
