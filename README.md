@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki Vallila-sovellukseeni](http://jpkangas.users.cs.helsinki.fi/vallila/)
-* [Linkki dokumentaatiooni](https://www.github.com/pekoe09/Tsoha-Bootstrap/doc/dokumentaatio.pdf)
+* [Linkki dokumentaatiooni](https://github.com/pekoe09/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
