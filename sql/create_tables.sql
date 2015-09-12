@@ -6,8 +6,7 @@ CREATE TABLE tyontekija(
 	on_johtaja BOOLEAN DEFAULT FALSE,
 	aloitus_pvm DATE NOT NULL,
 	lopetus_pvm DATE,
-	salasana char(40) NOT NULL,
-	suola bytea(16)
+	salasana char(40) NOT NULL
 );
 
 CREATE TABLE palvelu(
@@ -18,9 +17,10 @@ CREATE TABLE palvelu(
 );
 
 CREATE TABLE tyontekija_palvelu(
-	tyontekija_id INTEGER REFERENCES tyontekija(id) PRIMARY KEY NOT NULL,
-	palvelu_id INTEGER REFERENCES palvelu(id) PRIMARY KEY NOT NULL,
-	hinta MONEY NOT NULL
+	tyontekija_id INTEGER REFERENCES tyontekija(id) NOT NULL,
+	palvelu_id INTEGER REFERENCES palvelu(id) NOT NULL,
+	hinta MONEY NOT NULL,
+        PRIMARY KEY(tyontekija_id, palvelu_id)
 );
 
 CREATE TABLE toimitila(
@@ -31,8 +31,9 @@ CREATE TABLE toimitila(
 );
 
 CREATE TABLE toimitila_palvelu(
-	toimitila_id INTEGER REFERENCES toimitila(id) PRIMARY KEY NOT NULL,
-	palvelu_id INTEGER REFERENCES palvelu(id) PRIMARY KEY NOT NULL
+	toimitila_id INTEGER REFERENCES toimitila(id) NOT NULL,
+	palvelu_id INTEGER REFERENCES palvelu(id) NOT NULL,
+        PRIMARY KEY(toimitila_id, palvelu_id)
 );
 
 CREATE TABLE tyopaiva(
@@ -40,7 +41,7 @@ CREATE TABLE tyopaiva(
 	tyontekija_id INTEGER REFERENCES tyontekija(id),
 	paiva DATE NOT NULL,
 	alkaen TIME NOT NULL,
-	asti TIME NOT NULL,
+	asti TIME NOT NULL
 );
 
 CREATE TABLE aukiolopaiva(
@@ -48,7 +49,7 @@ CREATE TABLE aukiolopaiva(
 	toimitila_id INTEGER REFERENCES toimitila(id),
 	paiva DATE NOT NULL,
 	alkaen TIME NOT NULL,
-	asti TIME NOT NULL,
+	asti TIME NOT NULL
 );
 
 CREATE TABLE asiakas(
@@ -56,8 +57,7 @@ CREATE TABLE asiakas(
 	sukunimi varchar(100) NOT NULL,
 	etunimi varchar(100) NOT NULL,
 	sahkoposti varchar(200) NOT NULL UNIQUE,
-	salasana char(40),
-	suola bytea(16)
+	salasana char(40)
 );
 
 CREATE TABLE varaus(

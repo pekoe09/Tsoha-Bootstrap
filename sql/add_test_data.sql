@@ -1,11 +1,11 @@
 -- tyontekija-taulun testidata
 INSERT INTO tyontekija (sukunimi, etunimet, sahkoposti, on_johtaja, aloitus_pvm, lopetus_pvm, salasana, suola)
 SELECT
-'Testaaja', 'Terttu', 'terttu.testaaja@vallila.fi', false, '1997-07-20', null, 'xxx', 'xxx' UNION ALL
-'Toka', 'Totte', 'totte.toka@vallila.fi', false, '2003-03-31', null, 'xxx', 'xxx' UNION ALL
-'Joku', 'Arska', 'arska.joku@vallila.fi', false, '2008-12-01', '2008-12-02', 'xxx', 'xxx' UNION ALL
-'Kolmonen', 'Keijo', 'keijo.kolmonen@vallila.fi', false, '2011-03-01', null, 'xxx', 'xxx' UNION ALL
-'Tarkka', 'Taina', 'taina.tarkka@vallila.fi', true, '2015-08-20', null, 'xxx', 'xxx'
+'Testaaja', 'Terttu', 'terttu.testaaja@vallila.fi', false, '1997-07-20', null, 'xxx' UNION ALL
+'Toka', 'Totte', 'totte.toka@vallila.fi', false, '2003-03-31', null, 'xxx' UNION ALL
+'Joku', 'Arska', 'arska.joku@vallila.fi', false, '2008-12-01', '2008-12-02', 'xxx' UNION ALL
+'Kolmonen', 'Keijo', 'keijo.kolmonen@vallila.fi', false, '2011-03-01', null, 'xxx' UNION ALL
+'Tarkka', 'Taina', 'taina.tarkka@vallila.fi', true, '2015-08-20', null, 'xxx'
 ;
 
 -- palvelu-taulun testidata

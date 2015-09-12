@@ -47,4 +47,8 @@
     public static function tilastot(){
         View::make('suunnitelmat/tilastot.html');
     }
+        
+    public static function kirjaudu(){
+        View::make('suunnitelmat/kirjaudu.html');
+    }
   }

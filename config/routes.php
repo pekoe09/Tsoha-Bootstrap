@@ -43,3 +43,7 @@
   $routes->get('/tilastot', function(){
       HelloWorldController::tilastot();
   });
+  
+    $routes->get('/kirjaudu', function(){
+      HelloWorldController::kirjaudu();
+  });
