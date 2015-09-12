@@ -7,7 +7,7 @@
 
     <title>
       {% block title %}
-        Tietokantasovellus
+        Vallila
       {% endblock %}
     </title>
 
@@ -33,15 +33,18 @@
             <span class="icon-bar"></span>
           </button>
           <!-- Sovelluksen nimi -->
-          <a class="navbar-brand" href="{{base_path}}">Tsoha Bootstrap</a>
+          <a class="navbar-brand" href="{{base_path}}">Vallila</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
             <!-- Navigaation linkit -->
-            <li><a href="{{base_path}}">Etusivu</a></li>
-            <li><a href="{{base path}}">Työntekijät</a></li>
-            <li><a href="{{base path}}">Työntekijät</a></li>
+            <li><a href="{{base_path}}/varaus">Varaa aika</a></li>
+            <li><a href="{{base_path}}/palvelu">Palvelut</a></li>
+            <li><a href="{{base_path}}/tyontekija">Terapeutit</a></li>
+            <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
+            <li><a href="{{base_path}}/tilastot">Tilastot</a></li>
+            <li><a href="{{base_path}}/kayttaja">Omat tiedot</a></li>
           </ul>
         </div>
       </div>

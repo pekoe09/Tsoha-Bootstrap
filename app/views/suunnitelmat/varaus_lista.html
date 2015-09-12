@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Varaukset</h1>
+<button type="button" class="btn btn-primary">Lisää terapeutti</button>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Sukunimi</td>
+            <td>Etunimi</td>
+            <td>Sähköposti</td>
+            <td>Aloittanut</td>
+            <td>Lopettanut</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Joku</td>
+            <td>Arska</td>
+            <td>arska.joku@vallila.fi</td> 
+            <td>1.12.2008</td>
+            <td>2.12.2008</td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Kolmonen</td>
+            <td>Keijo</td>
+            <td>keijo.kolmonen@vallila.fi</td> 
+            <td>1.3.2011</td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Testaaja</td>
+            <td>Terttu</td>
+            <td>terttu.testaaja@vallila.fi</td> 
+            <td>20.7.1997</td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Toka</td>
+            <td>Totte</td>
+            <td>totte.toka@vallila.fi</td> 
+            <td>31.3.2003</td>
+            <td>2.12.2008</td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

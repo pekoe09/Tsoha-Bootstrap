@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Toimitilat</h1>
+<button type="button" class="btn btn-primary">Lisää toimitila</button>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Nimi</td>
+            <td>Katuosoite</td>
+            <td>Paikkakunta</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Allu</td>
+            <td>Aleksis Kiven katu 9</td>
+            <td>Helsinki</td> 
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Hauki</td>
+            <td>Haukilahdenkatu 4</td>
+            <td>Helsinki</td> 
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Portti</td>
+            <td>Maistraatinportti 2</td>
+            <td>Helsinki</td> 
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

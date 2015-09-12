@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tarjottavat terapiapalvelut</h1>
+<button type="button" class="btn btn-primary">Lisää palvelu</button>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Terapia</td>
+            <td>Kesto</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Askeltutkimus</td>
+            <td>1:00</td>
+            <td><a href="#">Lisätietoja</a></td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Kävelyharjoittelu</td>
+            <td>3:00</td>
+            <td><a href="#">Lisätietoja</a></td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        <tr>
+            <td>Niskahieronta</td>
+            <td>1:00</td>
+            <td><a href="#">Lisätietoja</a></td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
