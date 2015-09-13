@@ -19,7 +19,7 @@ CREATE TABLE palvelu(
 CREATE TABLE tyontekija_palvelu(
 	tyontekija_id INTEGER REFERENCES tyontekija(id) NOT NULL,
 	palvelu_id INTEGER REFERENCES palvelu(id) NOT NULL,
-	hinta MONEY NOT NULL,
+	hinta NUMERIC NOT NULL,
         PRIMARY KEY(tyontekija_id, palvelu_id)
 );
 
