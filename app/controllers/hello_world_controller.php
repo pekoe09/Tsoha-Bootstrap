@@ -50,4 +50,8 @@
     public static function kirjaudu(){
         View::make('suunnitelmat/kirjaudu.html');
     }
+            
+    public static function omat_tiedot(){
+        View::make('suunnitelmat/omat_tiedot.html');
+    }
   }

@@ -48,6 +48,10 @@
       HelloWorldController::tilastot();
   });
   
-    $routes->get('/kirjaudu', function(){
+  $routes->get('/kirjaudu', function(){
       HelloWorldController::kirjaudu();
+  });
+  
+  $routes->get('/omat_tiedot', function(){
+      HelloWorldController::omat_tiedot();
   });

@@ -1,18 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Teemu Työntekijä</h1>
-<form>
+<form class="form-horizontal">
     <div class="form-group">
-        <label>Sukunimi</label>
-        <input class="form-control" type="text" value="Työntekijä">
+        <label for="sukunimi" class='col-sm-2 control-label'>Sukunimi</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="sukunimi" type="text" value="Työntekijä">
+        </div>
     </div>
-    <div>
-        <label>Etunimi</label>
-        <input class="form-control" type="text" value="Teemu">
+    <div class="form-group">
+        <label for="etunimi" class='col-sm-2 control-label'>Etunimi</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="etunimi" type="text" value="Teemu">
+        </div>
     </div>
-    <div>
-        <label>Sähköposti</label>
-        <input class="form-control" type="text" value="teemu.tyontekija@ranka.com">
+    <div class="form-group">
+        <label for="sahkoposti" class='col-sm-2 control-label'>Sähköposti</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="sahkoposti" type="text" value="teemu.tyontekija@ranka.com">
+        </div>
+    </div>
+        <div class="form-group">
+        <label for="aloittanut" class='col-sm-2 control-label'>Aloittanut</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="aloittanut" type="date" value="">
+        </div>
+    </div>
+        <div class="form-group">
+        <label for="lopettanut" class='col-sm-2 control-label'>Lopettanut</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="lopettanut" type="date" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type='submit' class='btn btn-primary'>Tallenna</button>
+        </div>
     </div>
 </form>
 
