@@ -3,6 +3,10 @@
   $routes->get('/', function() {
     HelloWorldController::index();
   });
+  
+  $routes->get('/etusivu', function() {
+    HelloWorldController::index();
+  });
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
