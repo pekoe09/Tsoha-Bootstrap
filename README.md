@@ -13,4 +13,15 @@ Valmisaiheeseen verrattuna toteutettavassa sovelluksessa asiakkaan tulee kuitenk
 
 ## Päivitykset viikolla 2
 
-Tietokantarakenne on hahmottunut: sql-skriptit kannan luomiseen ja testidatalla populointiin on tehty ja dokumentaatio.pdf on päivitetty järjestelmän tietosisällön kuvauksen ja relaatiotietokantakaavion osalta. Lisäksi sovelluksen sivuista on tehty HTML-hahmotelmia. 
+Tietokantarakenne on hahmottunut: sql-skriptit kannan luomiseen ja testidatalla populointiin on tehty ja dokumentaatio.pdf on päivitetty järjestelmän tietosisällön kuvauksen ja relaatiotietokantakaavion osalta. Lisäksi osasta sovelluksen sivuja on tehty staattiset HTML-hahmotelmat, alla suorat linkit:
+* [Etusivu](http://jpkangas.users.cs.helsinki.fi/vallila/)
+* [Ajanvaraus](http://jpkangas.users.cs.helsinki.fi/vallila/varaus)
+* [Palvelulista](http://jpkangas.users.cs.helsinki.fi/vallila/palvelu)
+* [Palvelukuvaus](http://jpkangas.users.cs.helsinki.fi/vallila/palvelu/1)
+* [Terapeuttilista](http://jpkangas.users.cs.helsinki.fi/vallila/tyontekija)
+* [Terapeutin muokkaus](http://jpkangas.users.cs.helsinki.fi/vallila/tyontekija/1)
+* [Toimitilalista](http://jpkangas.users.cs.helsinki.fi/vallila/toimitila)
+* [Toimitilan muokkaus](http://jpkangas.users.cs.helsinki.fi/vallila/toimitila/1)
+* [Kirjautumissivu](http://jpkangas.users.cs.helsinki.fi/vallila/kirjaudu)
+
+**HUOM!** Sivut on tehty Johtaja-käyttäjän näkökulmasta, jolloin näkyvissä on enemmän sivuja ja toimintoja kuin muille käyttäjille. Terapeuttisivut eivät ole näkyvissä muille lainkaan ja Tilastot-sivu näkyy vain työntekijöille. "Lisää"-, "Muokkaa"- ja "Poista"-painikkeet näkyvät vain Johtajalle. 
