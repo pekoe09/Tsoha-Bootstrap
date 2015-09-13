@@ -10,3 +10,7 @@ Yleisiä linkkejä:
 Aiheena on valmiina ollut aihe ["Palvelubisnes"](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Palvelubisnes.html).
 
 Valmisaiheeseen verrattuna toteutettavassa sovelluksessa asiakkaan tulee kuitenkin rekisteröityä voidakseen varata palveluajan. Asiakkaasta tallennetaan perusyhteystiedot ja rekisteröitynyt asiakas voi sisäänkirjauduttuaan myös selata tekemiään varauksia ja peruuttaa niitä (jos varausaika on tulevaisuudessa). Sisäänkirjautumaton asiakas voi vain selata palveluiden tietoja sekä firman yleisesittelyä. Työntekijät voivat etsiä asiakkaiden varauksia ja peruuttaa niitä.
+
+## Päivitykset viikolla 2
+
+Tietokantarakenne on hahmottunut: sql-skriptit kannan luomiseen ja testidatalla populointiin on tehty ja dokumentaatio.pdf on päivitetty järjestelmän tietosisällön kuvauksen ja relaatiotietokantakaavion osalta. Lisäksi sovelluksen sivuista on tehty HTML-hahmotelmia. 
