@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{palvelu.nimi}}</h1>
+<button class="btn btn-danger">Poista</button>
+<button class="btn btn-primary">Muokkaa</button>
+<p>{{palvelu.kuvaus}}</p>
+<p>Terapiakäynnin kesto: {{palvelu.kesto}}</p>
+<h2>Terapeutit</h2>
+<ul>
+    <li>Terttu Testaaja</li>
+</ul>
+
+<h2>Toimipaikat</h2>
+<ul>
+    <li>Allu (Aleksis Kiven katu 9, Helsinki)</li>
+    <li>Portti (Maistraatinportti 2, Helsinki)</li>
+</ul>
+
+<a href="{{base_path}}/palvelu" class="btn btn-link" role="button">Takaisin palvelulistaan</a>
+{% endblock %}

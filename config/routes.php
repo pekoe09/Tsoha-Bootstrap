@@ -13,11 +13,11 @@
   });
 
   $routes->get('/palvelu', function(){
-      HelloWorldController::palvelu_lista();
+      PalveluController::index();
   });
   
-  $routes->get('/palvelu/1', function(){
-      HelloWorldController::palvelu();
+  $routes->get('/palvelu/:id', function($id){
+      PalveluController::show($id);
   });
   
   $routes->get('/tyontekija', function(){
