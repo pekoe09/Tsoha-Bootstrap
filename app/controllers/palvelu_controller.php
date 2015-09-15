@@ -11,9 +11,21 @@ class PalveluController extends BaseController{
         $palvelu = Palvelu::find($id);
         View::make('palvelu/palvelu.html', array('palvelu'=>$palvelu));
     }
+    
+    public static function create(){
+        View::make('palvelu/palvelu_lisaa.html');
+    }
 
     public static function store(){
+        $params = $_POST;
+        $palvelu = new Palvelu(array(
+            'nimi' => $params['nimi'],
+            'kesto' => $params['kesto'],
+            'kuvaus' => $params['kuvaus']
+        ));
+        $palvelu->save();
         
+        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
     }
     
 }

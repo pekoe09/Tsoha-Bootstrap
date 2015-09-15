@@ -16,24 +16,48 @@
       PalveluController::index();
   });
   
+  $routes->post('/palvelu', function(){
+      PalveluController::store();
+  });
+  
+  $routes->get('/palvelu/uusi', function(){
+      PalveluController::create();
+  });
+  
   $routes->get('/palvelu/:id', function($id){
       PalveluController::show($id);
   });
   
   $routes->get('/tyontekija', function(){
-      HelloWorldController::tyontekija_lista();
+      TyontekijaController::index();
   });
   
-  $routes->get('/tyontekija/1', function(){
-      HelloWorldController::tyontekija();
+  $routes->post('/tyontekija', function(){
+      TyontekijaController::store();
+  });
+    
+  $routes->get('/tyontekija/uusi', function(){
+      TyontekijaController::create();
+  });
+  
+  $routes->get('/tyontekija/:id', function($id){
+      TyontekijaController::show($id);
   });
     
   $routes->get('/toimitila', function(){
-      HelloWorldController::toimitila_lista();
+      ToimitilaController::index();
+  });
+    
+  $routes->post('/toimitila', function(){
+      ToimitilaController::store();
+  });
+    
+  $routes->get('/toimitila/uusi', function(){
+      ToimitilaController::create();
   });
   
-  $routes->get('/toimitila/1', function(){
-      HelloWorldController::toimitila();
+  $routes->get('/toimitila/:id', function($id){
+      ToimitilaController::show($id);
   });
       
   $routes->get('/varaus', function(){

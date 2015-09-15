@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lisää toimitila</h1>
+<form method="post" action="{{base_path}}/toimitila" class="form-horizontal">
+    <div class="form-group">
+        <label for="nimi" class='col-sm-2 control-label'>Nimi</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="nimi" name="nimi" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="katuosoite" class='col-sm-2 control-label'>Katuosoite</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="katuosoite" name="katuosoite" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="paikkakunta" class='col-sm-2 control-label'>Paikkakunta</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="paikkakunta" name="paikkakunta" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type='submit' class='btn btn-primary'>Tallenna</button>
+        </div>
+    </div>
+</form>
+
+<a href="{{base_path}}/toimitila" class="btn btn-link" role="button">Takaisin toimitilalistaan</a>
+{% endblock %}

@@ -47,7 +47,12 @@ class Palvelu extends BaseModel {
         $statement = 'INSERT INTO palvelu ("nimi", "kesto", "kuvaus")'
                     . 'VALUES (:nimi, :kesto, :kuvaus) RETURNING id';
         $query = DB::connection()->prepare($statement);
-        $query->execute();
+        $query->execute(array(
+            'nimi' => $this->nimi,
+            'kesto' => $this->kesto,
+            'kuvaus' => $this->kuvaus
+        ));
         $row = $query->fetch();
+        $this->id = $row['id'];
     }
 }

@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Tarjottavat terapiapalvelut</h1>
-<a href="{{base_path}}/palvelu/uusi" class="btn btn-primary" role="button">Lisää palvelu</a>
+<h1>Toimitilat</h1>
+<a href="{{base_path}}/toimitila/uusi" class="btn btn-primary" role="button">Lisää toimitila</a>
 <table class="table">
     <thead>
         <tr>
-            <td>Terapia</td>
-            <td>Kesto</td>
-            <td></td>
+            <td>Nimi</td>
+            <td>Katuosoite</td>
+            <td>Paikkakunta</td>
             <td></td>
             <td></td>
         </tr>
     </thead>
     <tbody>
-        {% for palvelu in palvelut %}
+        {% for toimitila in toimitilat %}
         <tr>
-            <td>{{palvelu.nimi}}</td>
-            <td>{{palvelu.kesto}}</td>
-            <td><a href="palvelu/{{palvelu.id}}">Lisätietoja</a></td>
+            <td>{{toimitila.nimi}}</td>
+            <td>{{toimitila.katuosoite}}</td>
+            <td>{{toimitila.paikkakunta}}</td>            
             <td><button type="button" class="btn btn-primary">Muuta</button></td>
             <td><button type="button" class="btn btn-danger">Poista</button></td>
         </tr>

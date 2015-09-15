@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Terapeutit</h1>
+<a href="{{base_path}}/tyontekija/uusi" class="btn btn-primary" role="button">Lisää terapeutti</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Sukunimi</td>
+            <td>Etunimi</td>
+            <td>Sähköposti</td>
+            <td>Aloittanut</td>
+            <td>Lopettanut</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tyontekija in tyontekijat %}
+        <tr>
+            <td>{{tyontekija.sukunimi}}</td>
+            <td>{{tyontekija.etunimet}}</td>
+            <td>{{tyontekija.sahkoposti}}</td> 
+            <td>{{tyontekija.aloitus_pvm}}</td>
+            <td>{{tyontekija.lopetus_pvm}}</td>
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
