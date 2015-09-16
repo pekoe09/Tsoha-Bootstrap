@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Asiakkaat</h1>
+<a href="{{base_path}}/asiakas/uusi" class="btn btn-primary" role="button">Lisää asiakas</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Nimi</td>
+            <td>Sähköposti</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asiakas in asiakkaat %}
+        <tr>
+            <td>{{asiakas.sukunimi ~ ', ' ~ asiakas.etunimi}}</td>
+            <td>{{asiakas.sahkoposti}}</td>           
+            <td><button type="button" class="btn btn-primary">Muuta</button></td>
+            <td><button type="button" class="btn btn-danger">Poista</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

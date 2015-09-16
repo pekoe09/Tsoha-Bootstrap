@@ -59,7 +59,19 @@
   $routes->get('/toimitila/:id', function($id){
       ToimitilaController::show($id);
   });
-      
+            
+  $routes->get('/asiakas', function(){
+      AsiakasController::index();
+  });
+    
+  $routes->post('/asiakas', function(){
+      AsiakasController::store();
+  });
+  
+  $routes->get('/asiakas/uusi', function(){
+      AsiakasController::create();
+  });
+  
   $routes->get('/varaus', function(){
       HelloWorldController::varaus();
   });

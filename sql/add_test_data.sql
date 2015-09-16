@@ -100,7 +100,7 @@ INSERT INTO asiakas (sukunimi, etunimi, sahkoposti, salasana)
 VALUES
 ('Lasinen', 'Lasse', 'llasinen@gmail.com', 'xxx'),
 ('Ötker', 'Doktor', 'd.otker@schlosswaldstein.ch', 'xxx'),
-('McDonald', 'Ronnie', 'ronald.mcdonald@somewhere.com', 'xxx')
+('McDonald', 'Ronnie', 'ronald.mcdonald@somewhere.com', 'xxx');
 
 -- varaus-taulun testidata
 
@@ -109,4 +109,4 @@ aloitusaika, lopetusaika, peruutettu)
 VALUES
 (1, 1, 2, '2015-09-30 13:00', '2015-09-30 14:00', false),
 (2, 1, 2, '2015-09-30 14:00', '2015-09-30 15:00', false),
-(2, 2, 1, '2015-09-30 10:00', '2015-09-30 11:00', false)
+(2, 2, 1, '2015-09-30 10:00', '2015-09-30 11:00', false);
