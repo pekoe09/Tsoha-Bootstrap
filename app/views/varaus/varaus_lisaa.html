@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Uusi varaus</h1>
+<form method="post" action="{{base_path}}/varaus" class="form-horizontal">
+    <input type='hidden' name='asiakas_id' id='asiakas_id' value='1'> <!-- tähän pitää poimia kirjautuneen asiakkaan id SESSION-tiedoista -->
+    <div class="form-group">
+        <label for="palvelu_id" class='col-sm-2 control-label'>Terapia</label>
+        <div class="col-sm-10">
+            <select class="form-control" id="palvelu_id" name="palvelu_id">
+                {% for palvelu in palvelut %}
+                <option value="{{palvelu.id}}">{{palvelu.nimi}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tyontekija_id" class='col-sm-2 control-label'>Terapeutti</label>
+        <div class="col-sm-10">
+            <select class="form-control" id="tyontekija_id" name="tyontekija_id">
+                {% for tyontekija in tyontekijat %}
+                <option value="{{tyontekija.id}}">{{tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi}}</option>                
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="toimitila-id" class='col-sm-2 control-label'>Toimipaikka</label>
+        <div class='col-sm-10'>
+            <select class="form-control" id="toimitila_id" name="toimitila_id">
+                {% for toimitila in toimitilat %}
+                <option value="{{toimitila.id}}">{{toimitila.nimi}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="paiva" class='col-sm-2 control-label'>Päivä</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="date" id="paiva" name="paiva">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="kellonaika" class='col-sm-2 control-label'>Kellonaika</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="time" id="kellonaika" name="kellonaika">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type='submit' class='btn btn-primary'>Tee varaus</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

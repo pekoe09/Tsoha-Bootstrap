@@ -26,6 +26,6 @@ class AsiakasController extends BaseController {
         ));
         $asiakas->save();
         
-        Redirect::to('/asiakas/' . $asiakas->id, array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));
+        Redirect::to('/', array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));
     }
 }

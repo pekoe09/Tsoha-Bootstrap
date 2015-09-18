@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <div class="jumbotron">
     <h1>Vallila: verratonta terapiaa!</h1>
     <h2>Kun haluat parasta kehollesi.</h2>

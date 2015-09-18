@@ -2,7 +2,7 @@
 
 class Tyontekija extends BaseModel{
     
-    public $sukunimi, $etunimi, $sahkoposti, $on_johtaja, $aloitus_pvm, $lopetus_pvm, $salasana;
+    public $id, $sukunimi, $etunimi, $sahkoposti, $on_johtaja, $aloitus_pvm, $lopetus_pvm, $salasana;
     
     public function __construct($attributes){
         parent::__construct($attributes);

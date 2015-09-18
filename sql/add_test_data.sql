@@ -104,9 +104,9 @@ VALUES
 
 -- varaus-taulun testidata
 
-INSERT INTO varaus (asiakas_id, palvelu_id, työntekijä_id, toimitila_id,
-aloitusaika, lopetusaika, peruutettu)
+INSERT INTO varaus (asiakas_id, palvelu_id, tyontekija_id, toimitila_id,
+aloitusaika, lopetusaika, on_peruutettu)
 VALUES
-(1, 1, 2, '2015-09-30 13:00', '2015-09-30 14:00', false),
-(2, 1, 2, '2015-09-30 14:00', '2015-09-30 15:00', false),
-(2, 2, 1, '2015-09-30 10:00', '2015-09-30 11:00', false);
+(2, 1, 1, 2, '2015-09-30 13:00', '2015-09-30 14:00', false),
+(3, 2, 1, 2, '2015-09-30 14:00', '2015-09-30 15:00', false),
+(2, 2, 2, 1, '2015-09-30 10:00', '2015-09-30 11:00', false);

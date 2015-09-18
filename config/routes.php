@@ -73,11 +73,19 @@
   });
   
   $routes->get('/varaus', function(){
-      HelloWorldController::varaus();
+      VarausController::index();
   });
   
-  $routes->get('/varaus/1', function(){
-      HelloWorldController::varaus();
+  $routes->post('/varaus', function(){
+      VarausController::store();
+  });
+    
+  $routes->get('/varaus/uusi', function(){
+      VarausController::create();
+  });
+  
+  $routes->get('/varaus/:id', function($id){
+      VarausController::show($id);
   });
     
   $routes->get('/tilastot', function(){
