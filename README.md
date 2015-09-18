@@ -25,3 +25,7 @@ Tietokantarakenne on hahmottunut: sql-skriptit kannan luomiseen ja testidatalla 
 * [Kirjautumissivu](http://jpkangas.users.cs.helsinki.fi/vallila/kirjaudu)
 
 **HUOM!** Sivut on tehty Johtaja-käyttäjän näkökulmasta, jolloin näkyvissä on enemmän sivuja ja toimintoja kuin muille käyttäjille. Terapeuttisivut eivät ole näkyvissä muille lainkaan ja Tilastot-sivu näkyy vain työntekijöille. "Lisää"-, "Muokkaa"- ja "Poista"-painikkeet näkyvät vain Johtajalle. 
+
+## Päivitykset viikolla 3
+
+(Tapahtunut tähän asti) Sovellukseen on toteutettu malliluokkia (Asiakas, Palvelu, Toimitila, Tyontekija, Varaus) joissa on all()-metodi kaikkien olioiden hakuun, find()-metodi tietyn olion hakuun ja save()-metodi olion tallennukseen. Kutakin mallia kohden on luotu kontrolleri, joka tukee mallin olioiden listausta, tallennusta sekä yksittäisen olion tietojen esittämistä; näkymiä on myös muokattu vastaavasti. Varauksen tallennus on vielä toteuttamatta.
