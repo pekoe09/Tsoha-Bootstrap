@@ -28,4 +28,4 @@ Tietokantarakenne on hahmottunut: sql-skriptit kannan luomiseen ja testidatalla 
 
 ## Päivitykset viikolla 3
 
-(Tapahtunut tähän asti) Sovellukseen on toteutettu malliluokkia (Asiakas, Palvelu, Toimitila, Tyontekija, Varaus) joissa on all()-metodi kaikkien olioiden hakuun, find()-metodi tietyn olion hakuun ja save()-metodi olion tallennukseen. Kutakin mallia kohden on luotu kontrolleri, joka tukee mallin olioiden listausta, tallennusta sekä yksittäisen olion tietojen esittämistä; näkymiä on myös muokattu vastaavasti. Varauksen tallennus on vielä toteuttamatta.
+(Tapahtunut tähän asti) Sovellukseen on toteutettu malliluokkia (Asiakas, Palvelu, Toimitila, Tyontekija, Varaus) joissa on all()-metodi kaikkien olioiden hakuun, find()-metodi tietyn olion hakuun ja save()-metodi olion tallennukseen. Kutakin mallia kohden on luotu kontrolleri, joka tukee mallin olioiden listausta, tallennusta sekä yksittäisen olion tietojen esittämistä; näkymiä on myös muokattu vastaavasti. Palvelu-tallennus ei vielä tallenna palveluun sopivia toimitiloja tai palvelua tarjoavia terapeutteja.
