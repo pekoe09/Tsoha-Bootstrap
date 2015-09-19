@@ -8,3 +8,25 @@
   max-width: 1200px;
   margin: 0px auto;
 }
+
+.subform-row-header-col {
+    padding-right: 10px;
+}
+
+.subform-row {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.subform {
+    padding-left: 15px;
+}
+
+.subform-heading {
+    font-weight: 700;
+    text-align: left;
+}
+
+.numeric-input {
+    text-align: right;
+}

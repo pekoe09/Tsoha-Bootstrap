@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+<div class="jumbotron">
+    <h1>Vallila: verratonta terapiaa!</h1>
+    <h2>Kun haluat parasta kehollesi.</h2>
+    <p>Vallila tarjoaa fysioterapeuttisia palveluita, niin arkisten jomotusten
+    helpottamiseksi kuin fyysisestä traumasta toipumiseksi. Meiltä saat alan
+    parhaiden asiantuntijoiden apua, viimeistä huutoa olevissa terapiatiloissamme.
+    Varaa terapiakäyntisi nyt!</p>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>Varaa aika</h3>
+                <p>Valitse vain palvelu, terapeutti, toimipiste ja aika ja olet 
+                    jo matkalla parempaan oloon!</p>
+                <p><a href="varaus" class="btn btn-primary" role=""button>Varaa!</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>Katsele palveluita</h3>
+                <p>Meiltä löydät markkinoiden kattavimman joukon fysioterapeuttisia palveluita!</p>
+                <p><a href="palvelu" class="btn btn-primary" role=""button>Lisätietoja</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>Yhteystiedot</h3>
+                <p>Löydät toimipaikkamme keskeisimmiltä paikoilta!</p>
+                <p><a href="toimitila" class="btn btn-primary" role=""button>Lisätietoja</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

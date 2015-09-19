@@ -26,19 +26,20 @@ class VarausController extends BaseController {
     public static function store(){
         $params = $_POST;
         $palvelu = Palvelu::find($params['palvelu_id']);
-        $aloitusaika = $params['paiva'] + $params['kellonaika'];
-        $lopetusaika = $aloitusaika + $palvelu->kesto;
+        $aloitusaika = strtotime($params['paiva'] . ' ' . $params['kellonaika']);
+        list($tunnit, $minuutit, $sekunnit) = sscanf($palvelu->kesto, '%d:%d:%d');
+        $kesto = new DateInterval(sprintf('PT%dH%dM', $tunnit, $minuutit));
+        $lopetusaika = date_timestamp_get(date_add(new DateTime('@' . $aloitusaika), $kesto));
         $varaus= new Varaus(array(
             'asiakas_id' => $params['asiakas_id'],
             'palvelu_id' => $params['palvelu_id'],
             'tyontekija_id' => $params['tyontekija_id'],
             'toimitila_id' => $params['toimitila_id'],
-            'aloitusaika' => $aloitusaika,
-            'lopetusaika' => $lopetusaika,
+            'aloitusaika' => date('Y-m-d H:i', $aloitusaika),
+            'lopetusaika' => date('Y-m-d H:i', $lopetusaika),
             'on_peruutettu' => NULL
         ));
         $varaus->save();
-        
-        Redirect::to('/varaus/' . $varaus->id, array('message' => 'Varaus tallennettu.'));
+        Redirect::to('/', array('message' => 'Varaus tallennettu.'));
     }
 }

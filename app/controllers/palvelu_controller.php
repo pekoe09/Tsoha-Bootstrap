@@ -13,7 +13,12 @@ class PalveluController extends BaseController{
     }
     
     public static function create(){
-        View::make('palvelu/palvelu_lisaa.html');
+        $toimitilat = Toimitila::all();
+        $tyontekijat =  Tyontekija::all();
+        View::make('palvelu/palvelu_lisaa.html', array(
+            'toimitilat' => $toimitilat,
+            'tyontekijat' => $tyontekijat
+        ));
     }
 
     public static function store(){

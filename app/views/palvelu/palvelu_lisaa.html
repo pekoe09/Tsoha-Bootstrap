@@ -21,6 +21,48 @@
         </div>
     </div>
     <div class="form-group">
+        <div class="col-sm-offset-2 subform">
+            <label class="subform-heading">Valitse terapiaan soveltuvat toimitilat</label>
+            <table>
+                <thead>
+                    <tr>
+                        <td class="subform-row-header-col">Nimi</td>
+                        <td>Soveltuu palvelulle</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for toimitila in toimitilat %}
+                    <tr class="soveltuva_toimitila subform-row">
+                        <td class="subform-row-header-col">{{toimitila.nimi}}</td>
+                        <td><input type="checkbox" value="{{toimitila.id}}"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>  
+    <div class="form-group">
+        <div class='col-sm-offset-2 subform'>
+            <label class="subform-heading">Merkitse sessiohinta terapiaa tarjoaville terapeuteille</label>
+            <table>
+                <thead>
+                    <tr>
+                        <td class='subform-row-header-col'>Nimi</td>
+                        <td>Hinta</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tyontekija in tyontekijat %}
+                    <tr class="tarjoava_tyontekija subform-row">
+                        <td class="subform-row-header-col">{{ tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi }}</td>
+                        <td data-tyontekija_id='{{tyontekija.id}}'><input type='text' class="numeric-input"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type='submit' class='btn btn-primary'>Tallenna</button>
         </div>
