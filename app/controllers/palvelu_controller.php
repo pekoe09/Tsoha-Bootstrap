@@ -32,6 +32,10 @@ class PalveluController extends BaseController{
         $tsekki = 'ei mitään';
         if ($input)
             $tsekki = 'jotain'; else $tsekki = 'tyhjä';
+            
+//        Kint::dump($request);
+//        Kint::dump($input);
+//        Kint::dump($tsekki);
         
 //        $params = $_POST;
 //        $palvelu = new Palvelu(array(
@@ -43,7 +47,7 @@ class PalveluController extends BaseController{
 //        $palvelu->save();
         
 //        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
-        Redirect::to('/palvelu', array('message' => $tsekki . ' ' . $request . ' ' . $input));
+        Redirect::to('/palvelu', array('message' => '$input: ' . $tsekki . ', $request: ' . $request . ' ' . $input));
     }
     
 }

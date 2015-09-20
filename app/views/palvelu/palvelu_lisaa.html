@@ -55,7 +55,7 @@
                     {% for tyontekija in tyontekijat %}
                     <tr class="tarjoava_tyontekija subform-row">
                         <td class="subform-row-header-col">{{ tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi }}</td>
-                        <td class="tyontekija_hinta" data-tyontekija_id='{{tyontekija.id}}'><input type='text' class="numeric-input tyontekija_hinta"></td>
+                        <td class="tyontekija_hinta" data-tyontekija-id='{{tyontekija.id}}'><input type='text' class="numeric-input tyontekija_hinta"></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -64,7 +64,7 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type='submit' class='btn btn-primary'>Tallenna</button>
+            
             <button class='btn btn-primary' onclick="saveChanges()">JS-Tallenna</button>
         </div>
     </div>
