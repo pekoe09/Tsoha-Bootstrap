@@ -22,15 +22,28 @@ class PalveluController extends BaseController{
     }
 
     public static function store(){
-        $params = $_POST;
+        $request = file_get_contents('php://input');
+        $input = json_decode($request, true);
         $palvelu = new Palvelu(array(
-            'nimi' => $params['nimi'],
-            'kesto' => $params['kesto'],
-            'kuvaus' => $params['kuvaus']
+            'nimi' => $input['nimi'],
+            'kesto' => $input['kesto'],
+            'kuvaus' => $input['kuvaus']
         ));
-        $palvelu->save();
+        $tsekki = 'ei mitään';
+        if ($input)
+            $tsekki = 'jotain'; else $tsekki = 'tyhjä';
         
-        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+//        $params = $_POST;
+//        $palvelu = new Palvelu(array(
+//            'nimi' => $params['nimi'],
+//            'kesto' => $params['kesto'],
+//            'kuvaus' => $params['kuvaus']
+//        ));
+        
+//        $palvelu->save();
+        
+//        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+        Redirect::to('/palvelu', array('message' => $tsekki . ' ' . $request . ' ' . $input));
     }
     
 }

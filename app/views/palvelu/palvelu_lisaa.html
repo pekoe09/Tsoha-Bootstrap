@@ -34,7 +34,7 @@
                     {% for toimitila in toimitilat %}
                     <tr class="soveltuva_toimitila subform-row">
                         <td class="subform-row-header-col">{{toimitila.nimi}}</td>
-                        <td><input type="checkbox" value="{{toimitila.id}}"></td>
+                        <td><input type="checkbox" class="toimitila_id" value="{{toimitila.id}}"></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -55,7 +55,7 @@
                     {% for tyontekija in tyontekijat %}
                     <tr class="tarjoava_tyontekija subform-row">
                         <td class="subform-row-header-col">{{ tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi }}</td>
-                        <td data-tyontekija_id='{{tyontekija.id}}'><input type='text' class="numeric-input"></td>
+                        <td class="tyontekija_hinta" data-tyontekija_id='{{tyontekija.id}}'><input type='text' class="numeric-input tyontekija_hinta"></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -65,9 +65,12 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type='submit' class='btn btn-primary'>Tallenna</button>
+            <button class='btn btn-primary' onclick="saveChanges()">JS-Tallenna</button>
         </div>
     </div>
 </form>
 
 <a href="{{base_path}}/palvelu" class="btn btn-link" role="button">Takaisin palvelulistaan</a>
+
+<script src="/vallila/assets/js/palvelu_lisaa.js"></script>
 {% endblock %}
