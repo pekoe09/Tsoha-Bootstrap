@@ -31,3 +31,9 @@ Tietokantarakenne on hahmottunut: sql-skriptit kannan luomiseen ja testidatalla 
 Sovellukseen on toteutettu malliluokkia (Asiakas, Palvelu, Toimitila, Tyontekija, Varaus) joissa on all()-metodi kaikkien olioiden hakuun, find()-metodi tietyn olion hakuun ja save()-metodi olion tallennukseen. Kutakin mallia kohden on luotu kontrolleri, joka tukee mallin olioiden listausta, tallennusta sekä yksittäisen olion tietojen esittämistä; näkymiä on myös muokattu vastaavasti. 
 
 Palvelu-tallennusta on alettu muuttaa JSON-pohjaiseksi, jotta palveluun soveltuvien toimitilojen ja terapeuttien tiedot saisi siirrettyä siististi kontrollerille (tallennettavat tiedot poimitaan näkymästä jQuery-pätkällä). Tämä on kesken; jostain syystä näkymästä lähtevä json-muotoinen tieto onkin muuttunut uriksi, kun sen poimii kontrollerissa file_get_contents('php://input') -kutsulla. Syy toistaiseksi epäselvä allekirjoittaneelle.
+
+## Päivitykset viikolla 4
+
+(Tapahtunut so far) Palvelu-tallennus toimii nyt JSONin avulla. Form-tagiin oli jäänyt method- ja action-attribuutit jolloin submit-tapahtumakin laukesi sen lisäksi että data lähti skriptillä kontrollerille; ilmeisesti kilpajuoksua kun välillä voitti json-POST ja välillä querystring-POST... Tämä on nyt fiksattu ja kontrollerille menee pelkästään skriptin POST json-payloadilla - mutta jostain syystä redirect ei toimi. Selaimella näkyy että palvelimelta tulee 200:na sivu, jolle ohjaus tapahtuu (näyttää vieläpä sisältävän kaiken tarpeellisen) mutta selainpa ei sitä suostu näyttämään vaan lillii edelleen muokkaus-sivulla. Epäilen liittyvän siihen, että lomakkeen oletus-submit estetään nyt palauttamalla skriptin funktiosta false sen jälkeen kun ajax-kutsu on lähtenyt... 
+
+Lisäksi korjattu toimitilojen ja terapeuttien tallennuksessa olleita bugeja ja alettu lisäämään muokkaus- ja poistomahdollisuuksia, ensimmäisenä vuorossa Asiakas.
