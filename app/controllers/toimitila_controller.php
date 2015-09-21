@@ -25,6 +25,6 @@ class ToimitilaController extends BaseController{
         ));
         $toimitila->save();
         
-        Redirect::to('/toimitila/' . $toimitila->id, array('message' => 'Toimitila tallennettu.'));
+        Redirect::to('/toimitila', array('message' => 'Toimitila tallennettu.'));
     }
 }

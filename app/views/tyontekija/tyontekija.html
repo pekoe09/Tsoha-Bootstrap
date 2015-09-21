@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+<h1>{{tyontekija.sukunimi ~ ', ' ~ tyontekija.etunimi}}</h1>
+<button class="btn btn-danger">Poista</button>
+<button class="btn btn-primary">Muokkaa</button>
+<p>Sahkoposti: {{tyontekija.sahkoposti}}</p>
+<p>Aloittanut: {{tyontekija.aloituspvm}}</p>
+<p>Lopettanut: {{tyontekija.lopetuspvm}}</p>
+<p>Johtaja {{tyontekija.on_johtaja}}</p>
+<h2>Palvelut</h2>
+<ul>
+    <li>Niskahieronta</li>
+</ul>
+
+
+<a href="{{base_path}}/tyontekija" class="btn btn-link" role="button">Takaisin työntekijälistaan</a>
+{% endblock %}

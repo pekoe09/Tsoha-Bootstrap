@@ -21,7 +21,7 @@ class PalveluController extends BaseController{
         ));
     }
 
-    public static function store(){
+    public static function store(){        
         $request = file_get_contents('php://input');
         $input = json_decode($request, true);
         $palvelu = new Palvelu(array(
@@ -32,22 +32,10 @@ class PalveluController extends BaseController{
         $tsekki = 'ei mitään';
         if ($input)
             $tsekki = 'jotain'; else $tsekki = 'tyhjä';
-            
-//        Kint::dump($request);
-//        Kint::dump($input);
-//        Kint::dump($tsekki);
         
-//        $params = $_POST;
-//        $palvelu = new Palvelu(array(
-//            'nimi' => $params['nimi'],
-//            'kesto' => $params['kesto'],
-//            'kuvaus' => $params['kuvaus']
-//        ));
+        $palvelu->save();
         
-//        $palvelu->save();
-        
-//        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
-        Redirect::to('/palvelu', array('message' => '$input: ' . $tsekki . ', $request: ' . $request . ' ' . $input));
-    }
+        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+    }    
     
 }

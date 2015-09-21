@@ -1,5 +1,11 @@
-//$(document).ready(function(){    
-//    
+//$(document).ready(function(){   
+//
+//    $("form").submit()(function(e){
+//        alert("submit-event huudettu")
+//        e.preventDefault();
+//        saveChanges();
+//    });
+    
     function saveChanges(){       
 //        alert('saveChanges huudettu');
         //var message = 'arvot: (nimi = '.concat($('#nimi').val(), ' kesto = ', $('#kesto').val(), 'kuvaus = ', $('#kuvaus').val(), ')');
@@ -38,14 +44,17 @@
         
         // lähetä tallennettavat tiedot kontrollerille json-muodossa POST-metodilla
         alert(JSON.stringify(saveData));
-//        $.post("{{base_path}}/palvelu", JSON.stringify(saveData), function(){});
+//        $.post("http://jpkangas.users.cs.helsinki.fi/vallila/palvelu", JSON.stringify(saveData), function(){});
 
         $.ajax({
            type: "POST",
            url: "http://jpkangas.users.cs.helsinki.fi/vallila/palvelu",
+//           url: "{{base_path}}/palvelu",
            data: JSON.stringify(saveData),
            contentType: "application/json; charset=UTF-8",
            dataType: "json"           
         });
+        
+        return false;
     }
 //});

@@ -58,4 +58,24 @@ class Asiakas extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+    
+    public function update(){
+        $statement = 'UPDATE asiakas SET "sukunimi" = :sukunimi, "etunimi" = :etunimi, "sahkoposti" = :sahkoposti'
+                . 'WHERE "id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id,
+            'sukunimi' => $this->sukunimi,
+            'etunimi' => $this->etunimi,
+            'sahkoposti' => $this->sahkoposti
+        ));
+    }
+    
+    public function destroy(){
+        $statement = 'DELETE FROM asiakas WHERE "id" = :id';
+                $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+    }
 }

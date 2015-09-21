@@ -53,15 +53,15 @@ class Tyontekija extends BaseModel{
     
     public function save(){
         $statement = 'INSERT INTO tyontekija ("sukunimi", "etunimi", "sahkoposti", "on_johtaja", "aloitus_pvm", "lopetus_pvm", "salasana")'
-                    . 'VALUES (:sukunimi, :etunimi, :sahkoposti, :on_johtaja, :aloitus_pvm, :lopetus_pvm, :salasana) RETURNING id';
+                    . 'VALUES (:sukunimi, :etunimi, :sahkoposti, false, :aloitus_pvm, :lopetus_pvm, :salasana) RETURNING id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(
             'sukunimi' => $this->sukunimi,
             'etunimi' => $this->etunimi,
             'sahkoposti' => $this->sahkoposti,
-            'on_johtaja' => $this->on_johtaja,
-            'aloitus_pvm' => $this->aloitus_pvm,
-            'lopetus_pvm' => $this->lopetus_pvm,
+//            'on_johtaja' => $this->on_johtaja,
+            'aloitus_pvm' => date('Y-m-d H:i', strtotime($this->aloitus_pvm)),
+            'lopetus_pvm' => $this->lopetus_pvm == null? null : date('Y-m-d', $this->lopetus_pvm),
             'salasana' => $this->salasana            
         ));
         $row = $query->fetch();
