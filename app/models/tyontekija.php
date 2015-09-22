@@ -67,4 +67,27 @@ class Tyontekija extends BaseModel{
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+        
+    public function update(){
+        $statement = 'UPDATE tyontekija SET "sukunimi" = :sukunimi, "etunimi" = :etunimi, "sahkoposti" = :sahkoposti,'
+                . ' "aloitus_pvm" = :aloitus_pvm, "lopetus_pvm" = :lopetus_pvm, "salasana" = :salasana WHERE "id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'sukunimi' => $this->sukunimi,
+            'etunimi' => $this->etunimi,
+            'sahkoposti' => $this->sahkoposti,
+            'aloitus_pvm' => date('Y-m-d H:i', strtotime($this->aloitus_pvm)),
+            'lopetus_pvm' => $this->lopetus_pvm == null? null : date('Y-m-d', $this->lopetus_pvm),
+            'salasana' => $this->salasana,
+            'id' => $this->id
+        ));
+    }
+    
+    public function destroy(){
+        $statement = 'DELETE FROM tyontekija WHERE "id" = :id';
+                $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+    }
 }

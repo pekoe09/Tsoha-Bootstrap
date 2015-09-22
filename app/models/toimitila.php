@@ -55,4 +55,24 @@ class Toimitila extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+    
+    public function update(){
+        $statement = 'UPDATE toimitila SET "nimi" = :nimi, "katuosoite" = :katuosoite, "paikkakunta" = :paikkakunta'
+                . ' WHERE "id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'nimi' => $this->nimi,
+            'katuosoite' => $this->katuosoite,
+            'paikkakunta' => $this->paikkakunta,
+            'id' => $this->id
+        ));
+    }
+    
+    public function destroy(){
+        $statement = 'DELETE FROM toimitila WHERE "id" = :id';
+                $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+    }
 }

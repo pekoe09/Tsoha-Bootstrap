@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>Asiakkaat</h1>
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <a href="{{base_path}}/asiakas/uusi" class="btn btn-primary" role="button">Lisää asiakas</a>
 <table class="table">
     <thead>
@@ -16,8 +18,8 @@
         <tr>
             <td>{{asiakas.sukunimi ~ ', ' ~ asiakas.etunimi}}</td>
             <td>{{asiakas.sahkoposti}}</td>           
-            <td><button type="button" class="btn btn-primary">Muuta</button></td>
-            <td><button type="button" class="btn btn-danger">Poista</button></td>
+            <td>{{forms.edit_button("#{base_path}/asiakas/#{asiakas.id}/muokkaa")}}</td>
+            <td>{{forms.destroy_button("#{base_path}/asiakas/#{asiakas.id}/poista")}}</td>
         </tr>
         {% endfor %}
     </tbody>

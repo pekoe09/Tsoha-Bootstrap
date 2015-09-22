@@ -70,4 +70,28 @@ class Varaus extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+        
+    public function update(){
+        $statement = 'UPDATE varaus SET "asiakas_id" = :asiakas_id, "palvelu_id" = :palvelu_id, "tyontekija_id" = :tyontekija_id,'
+                . '"toimitila_id" = :toimitila_id, "aloitusaika" = aloitusaika, "lopetusaika" = lopetusaika, "on_peruutettu" = on_peruutettu WHERE "id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'asiakas_id' => $this->asiakas_id,
+            'palvelu_id' => $this->palvelu_id,
+            'tyontekija_id' => $this->tyontekija_id,
+            'toimitila_id' => $this->toimitila_id,
+            'aloitusaika' => $this->aloitusaika,
+            'lopetusaika' => $this->lopetusaika,
+            'on_peruutettu' => $this->on_peruutettu,
+            'id' => $this->id
+        ));
+    }
+    
+    public function destroy(){
+        $statement = 'DELETE FROM varaus WHERE "id" = :id';
+                $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+    }
 }

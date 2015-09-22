@@ -27,4 +27,39 @@ class ToimitilaController extends BaseController{
         
         Redirect::to('/toimitila', array('message' => 'Toimitila tallennettu.'));
     }
+        
+    public static function edit($id) {
+        $toimitila = Toimitila::find($id);
+        View::make('toimitila/toimitila_muokkaa.html', array('toimitila' => $toimitila));
+    }
+    
+    public static function update($id) {
+        $params = $_POST;
+        $attributes = array(
+            'id' => $id,
+            'nimi' => $params['nimi'],
+            'katuosoite' => $params['katuosoite'],
+            'paikkakunta' => $params['paikkakunta']
+        );
+        
+        $toimitila = new Toimitila($attributes);
+        $errors = array();
+//        $errors = $toimitila->errors();
+        
+        if(count($errors) > 0){
+            View::make('toimitila/muokkaa.html', 
+                    array('errors' => $errors, 'attributes' => $attributes));
+        } else {
+            $toimitila->update();
+            Redirect::to('/toimitila', array('message' => 
+                'Toimitilan (' . $toimitila->nimi . ') tiedot päivitetty!'));
+        }
+    }
+    
+    public static function destroy($id) {
+        $toimitila = Toimitila::find($id);
+        $toimitila->destroy();        
+        Redirect::to('/toimitila', 
+                array('message' => 'Toimitila (' . $toimitila->nimi . ') poistettu.'));
+    }
 }

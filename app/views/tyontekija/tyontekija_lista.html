@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>Terapeutit</h1>
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <a href="{{base_path}}/tyontekija/uusi" class="btn btn-primary" role="button">Lisää terapeutti</a>
 <table class="table">
     <thead>
@@ -22,8 +24,8 @@
             <td>{{tyontekija.sahkoposti}}</td> 
             <td>{{tyontekija.aloitus_pvm}}</td>
             <td>{{tyontekija.lopetus_pvm}}</td>
-            <td><button type="button" class="btn btn-primary">Muuta</button></td>
-            <td><button type="button" class="btn btn-danger">Poista</button></td>
+            <td>{{forms.edit_button("#{base_path}/tyontekija/#{tyontekija.id}/muokkaa")}}</td>
+            <td>{{forms.destroy_button("#{base_path}/tyontekija/#{tyontekija.id}/poista")}}</td>
         </tr>
         {% endfor %}
     </tbody>

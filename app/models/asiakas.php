@@ -60,14 +60,15 @@ class Asiakas extends BaseModel {
     }
     
     public function update(){
-        $statement = 'UPDATE asiakas SET "sukunimi" = :sukunimi, "etunimi" = :etunimi, "sahkoposti" = :sahkoposti'
-                . 'WHERE "id" = :id';
+        $statement = 'UPDATE asiakas SET "sukunimi" = :sukunimi, "etunimi" = :etunimi, "sahkoposti" = :sahkoposti,'
+                . '"salasana" = :salasana WHERE "id" = :id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(
-            'id' => $this->id,
             'sukunimi' => $this->sukunimi,
             'etunimi' => $this->etunimi,
-            'sahkoposti' => $this->sahkoposti
+            'sahkoposti' => $this->sahkoposti,
+            'salasana' => $this->salasana,
+            'id' => $this->id
         ));
     }
     

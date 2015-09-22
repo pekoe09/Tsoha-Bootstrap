@@ -42,4 +42,43 @@ class VarausController extends BaseController {
         $varaus->save();
         Redirect::to('/', array('message' => 'Varaus tallennettu.'));
     }
+            
+    public static function edit($id) {
+        $varaus = Varaus::find($id);
+        View::make('varaus/varaus_muokkaa.html', array('varaus' => $varaus));
+    }
+    
+    public static function update($id) {
+        $params = $_POST;
+        $attributes = array(
+            'id' => $id,
+            'asiakas_id' => $params['asiakas_id'],
+            'palvelu_id' => $params['palvelu_id'],
+            'tyontekija_id' => $params['tyontekija_id'],
+            'toimitila_id' => $params['toimitila_id'],
+            'aloitusaika' => date('Y-m-d H:i', $aloitusaika),
+            'lopetusaika' => date('Y-m-d H:i', $lopetusaika),
+            'on_peruutettu' => NULL
+        );
+        
+        $varaus = new Varaus($attributes);
+        $errors = array();
+//        $errors = $varaus->errors();
+        
+        if(count($errors) > 0){
+            View::make('varaus/varaus_muokkaa.html', 
+                    array('errors' => $errors, 'attributes' => $attributes));
+        } else {
+            $varaus->update();
+            Redirect::to('/varaus', array('message' => 
+                'Varauksen tiedot päivitetty!'));
+        }
+    }
+    
+    public static function destroy($id) {
+        $varaus = Varaus::find($id);
+        $varaus->destroy();        
+        Redirect::to('/varaus', 
+                array('message' => 'Varaus poistettu.'));
+    }
 }

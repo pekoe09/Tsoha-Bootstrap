@@ -55,4 +55,24 @@ class Palvelu extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+        
+    public function update(){
+        $statement = 'UPDATE palvelu SET "nimi" = :nimi, "kesto" = :kesto, "kuvaus" = :kuvaus,'
+                . ' WHERE "id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'nimi' => $this->nimi,
+            'kesto' => $this->kesto,
+            'kuvaus' => $this->kuvaus,
+            'id' => $this->id
+        ));
+    }
+    
+    public function destroy(){
+        $statement = 'DELETE FROM palvelu WHERE "id" = :id';
+                $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+    }
 }

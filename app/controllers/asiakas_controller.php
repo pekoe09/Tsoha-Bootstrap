@@ -31,7 +31,7 @@ class AsiakasController extends BaseController {
     
     public static function edit($id) {
         $asiakas = Asiakas::find($id);
-        View::make('asiakas/muokkaa.html', array('attributes' => $asiakas));
+        View::make('asiakas/asiakas_muokkaa.html', array('asiakas' => $asiakas));
     }
     
     public static function update($id) {
@@ -40,24 +40,29 @@ class AsiakasController extends BaseController {
             'id' => $id,
             'sukunimi' => $params['sukunimi'],
             'etunimi' => $params['etunimi'],
-            'sahkoposti' => $params['sahkoposti']
+            'sahkoposti' => $params['sahkoposti'],
+            'salasana' => $params['salasana']
         );
         
         $asiakas = new Asiakas($attributes);
-        $errors = $asiakas->errors();
+        $errors = array();
+//        $errors = $asiakas->errors();
         
         if(count($errors) > 0){
-            View::make('asiakas/muokkaa.html', 
+            View::make('asiakas/asiakas_muokkaa.html', 
                     array('errors' => $errors, 'attributes' => $attributes));
         } else {
             $asiakas->update();
-            Redirect::to('/asiakas/' . $asiakas->id, array('message' => 'Tiedot päivitetty!'));
+            Redirect::to('/asiakas', array('message' => 
+                'Asiakkaan (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') tiedot päivitetty!'));
         }
     }
     
     public static function destroy($id) {
-        $asiakas = new Asiakas(array('id' => $id));
+//        $asiakas = new Asiakas(array('id' => $id));
+        $asiakas = Asiakas::find($id);
         $asiakas->destroy();        
-        Redirect::to('/asiakas', array('message' => 'Asiakas poistettu.'));
+        Redirect::to('/asiakas', 
+                array('message' => 'Asiakas (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') poistettu.'));
     }
 }
