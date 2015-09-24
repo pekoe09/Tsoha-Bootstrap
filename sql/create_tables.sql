@@ -2,7 +2,7 @@ CREATE TABLE tyontekija(
 	id SERIAL PRIMARY KEY,
 	sukunimi varchar(50) NOT NULL,
 	etunimi varchar(50) NOT NULL,
-	sahkoposti varchar(200) UNIQUE,
+	sahkoposti varchar(200) NOT NULL UNIQUE,
 	on_johtaja BOOLEAN DEFAULT FALSE,
 	aloitus_pvm DATE NOT NULL,
 	lopetus_pvm DATE,

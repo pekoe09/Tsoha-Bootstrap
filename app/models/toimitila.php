@@ -6,6 +6,7 @@ class Toimitila extends BaseModel {
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_nimi', 'validate_katuosoite', 'validate_paikkakunta');
     }
     
     public static function all(){
@@ -74,5 +75,17 @@ class Toimitila extends BaseModel {
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+    
+    public function validate_nimi(){
+        return $this->validate_string_length('Nimi', $this->nimi, 1, 100, false);
+    }
+    
+    public function validate_katuosoite(){
+        return $this->validate_string_length('Katuosoite', $this->nimi, 1, 200, false);
+    }
+    
+    public function validate_paikkakunta(){
+        return $this->validate_string_length('Paikkakunta', $this->nimi, 1, 50, false);
     }
 }

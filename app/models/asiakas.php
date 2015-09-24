@@ -6,6 +6,7 @@ class Asiakas extends BaseModel {
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti', 'validate_salasana');
     }
     
     public static function all(){
@@ -78,5 +79,21 @@ class Asiakas extends BaseModel {
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+    
+    public function validate_sukunimi(){
+        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
+    }
+    
+    public function validate_etunimi(){
+        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
+    }
+    
+    public function validate_sahkoposti(){
+        return $this->validate_email('Sähköposti', $this->sahkoposti, false);
+    }
+    
+    public function validate_salasana(){
+        return $this->validate_password('Salasana', $this->salasana);
     }
 }

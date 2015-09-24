@@ -7,6 +7,14 @@
   $routes->get('/etusivu', function() {
       EtusivuController::index();
   });
+  
+  $routes->get('/login', function(){
+      KayttajaController::login();
+  });
+  
+  $routes->post('/login', function(){
+      KayttajaController::handleLogin();
+  });
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();

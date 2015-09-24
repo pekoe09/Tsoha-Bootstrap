@@ -6,6 +6,8 @@ class Tyontekija extends BaseModel{
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti',
+            'validate_aloitus_pvm', 'validate_lopetus_pvm', 'validate_salasana');
     }
     
     public static function all(){
@@ -89,5 +91,29 @@ class Tyontekija extends BaseModel{
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+    
+    public function validate_sukunimi(){
+        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
+    }
+    
+    public function validate_etunimi(){
+        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
+    }
+    
+    public function validate_sahkoposti(){
+        return $this->validate_email('Sähköposti', $this->sahkoposti, FALSE);
+    }
+    
+    public function validate_salasana(){
+        return $this->validate_password('Salasana', $this->salasana);
+    }
+    
+    public function validate_aloitus_pvm(){
+        return $this->validate_date('Aloituspvm', $this->aloitus_pvm, null, null, false);
+    }
+    
+    public function validate_lopetus_pvm(){
+        return $this->validate_date('Lopetuspvm', $this->lopetus_pvm, null, null, true);
     }
 }

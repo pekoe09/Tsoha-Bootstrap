@@ -18,15 +18,22 @@ class AsiakasController extends BaseController {
 
     public static function store(){
         $params = $_POST;
-        $asiakas = new Asiakas(array(
+        $attributes = array(
             'sukunimi' => $params['sukunimi'],
             'etunimi' => $params['etunimi'],
             'sahkoposti' => $params['sahkoposti'],
             'salasana' => $params['salasana']
-        ));
-        $asiakas->save();
+        );
+        $asiakas = new Asiakas($attributes);
+        $errors = $asiakas->errors();
         
-        Redirect::to('/', array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));
+        if(count($errors) > 0){
+            View::make('asiakas/asiakas_lisaa.html', 
+                    array('errors' => $errors, 'asiakas' => $asiakas));
+        } else {
+            $asiakas->save();        
+            Redirect::to('/', array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));
+        }
     }
     
     public static function edit($id) {
@@ -45,12 +52,11 @@ class AsiakasController extends BaseController {
         );
         
         $asiakas = new Asiakas($attributes);
-        $errors = array();
-//        $errors = $asiakas->errors();
+        $errors = $asiakas->errors();
         
         if(count($errors) > 0){
             View::make('asiakas/asiakas_muokkaa.html', 
-                    array('errors' => $errors, 'attributes' => $attributes));
+                    array('errors' => $errors, 'asiakas' => $asiakas));
         } else {
             $asiakas->update();
             Redirect::to('/asiakas', array('message' => 

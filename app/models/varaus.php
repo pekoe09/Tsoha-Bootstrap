@@ -7,6 +7,9 @@ class Varaus extends BaseModel {
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_asiakas_id', 'validate_palvelu_id', 
+            'validate_tyontekija_id', 'validate_toimitila_id', 'validate_aloitusaika',
+            'validate_lopetusaika');
     }
     
     public static function all(){
@@ -93,5 +96,29 @@ class Varaus extends BaseModel {
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+    
+    public function validate_asiakas_id(){
+        return $this->validate_number('Asiakas', $this->asiakas_id, 1, null, true, false);
+    }
+    
+    public function validate_palvelu_id(){
+        return $this->validate_number('Palvelu', $this->palvelu_id, 1, null, true, false);
+    }
+    
+    public function validate_tyontekija_id(){
+        return $this->validate_number('Terapeutti', $this->tyontekija_id, 1, null, true, false);
+    }
+    
+    public function validate_toimitila_id(){
+        return $this->validate_number('Toimipaikka', $this->toimitila_id, 1, null, true, false);
+    }
+    
+    public function validate_aloitusaika(){
+        return $this->validate_date('Aloitusaika', $this->aloitusaika, null, null, false);
+    }
+    
+    public function validate_lopetusaika(){
+        return $this->validate_date('Lopetusaika', $this->lopetusaika, null, null, false);
     }
 }

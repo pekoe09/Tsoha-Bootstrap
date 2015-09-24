@@ -6,6 +6,7 @@ class Palvelu extends BaseModel {
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_nimi', 'validate_kesto', 'validate_kuvaus');
     }
     
     public static function all(){
@@ -74,5 +75,18 @@ class Palvelu extends BaseModel {
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+    
+    public function validate_nimi(){
+        return $this->validate_string_length('Nimi', $this->nimi, 1, 100, false);
+    }
+    
+    public function validate_kesto(){
+        return $this->validate_time('Kesto', $this->kesto, 
+                new DateInterval('PT0H15M'), new DateInterval('PT10H'), false);
+    }
+    
+    public function validate_kuvaus(){
+        return $this->validate_string_length('Kuvaus', $this->kuvaus, 0, 5000, true);
     }
 }
