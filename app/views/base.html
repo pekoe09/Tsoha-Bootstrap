@@ -37,18 +37,20 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navigation">
-          <ul class="nav navbar-nav">
-            <!-- Navigaation linkit -->
-            <li><a href="{{base_path}}/varaus/uusi">Varaa aika</a></li>
-            <li><a href="{{base_path}}/palvelu">Palvelut</a></li>
-            <li><a href="{{base_path}}/tyontekija">Terapeutit</a></li>
-            <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
-            <li><a href="{{base_path}}/asiakas">Asiakkaat</a></li>
-            <li><a href="{{base_path}}/tilastot">Tilastot</a></li>
-            <li><a href="{{base_path}}/omat_tiedot">Omat tiedot</a></li>
-          </ul>
-            
+            <ul class="nav navbar-nav">
+                <!-- Navigaation linkit -->
+                <li><a href="{{base_path}}/varaus/uusi">Varaa aika</a></li>
+                <li><a href="{{base_path}}/palvelu">Palvelut</a></li>
+                <!-- nämä näkyvät vain johtajalle -->
+                <li><a href="{{base_path}}/tyontekija">Terapeutit</a></li>
+                <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
+                <!-- nämä näkyvät työntekijöille -->
+                <li><a href="{{base_path}}/asiakas">Asiakkaat</a></li>
+                <li><a href="{{base_path}}/tilastot">Tilastot</a></li>            
+            </ul>            
             <ul class="nav navbar-nav navbar-right">
+                <!-- omat tiedot näkyy vain kirjautuneelle asiakkaalle -->
+                <li><a href="{{base_path}}/omat_tiedot">Omat tiedot</a></li>
                 <li><a href="{{base_path}}/asiakas/uusi">Rekisteröidy</a></li>
                 <li><a href="{{base_path}}/kirjaudu">Kirjaudu sisään</a></li>
             </ul>

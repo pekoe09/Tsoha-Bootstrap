@@ -25,9 +25,16 @@ class Kayttaja extends BaseModel {
         }
         
         if(!$row){
-            ;
+            View::make('kirjaudu.html', 
+                    array('errors' => $errors, 'sahkoposti' => $sahkoposti));
         }else{
-            return ;
+            $user = new Kayttaja(array(
+                'id' => $row['id'],
+                'sukunimi' => $row['sukunimi'],
+                'etunimi' => $row['etunimi'],
+                'sahkoposti' => $row['sahkoposti']                
+            ));
+            return $user;
         }
             
     }

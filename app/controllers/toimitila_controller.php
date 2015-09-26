@@ -18,14 +18,21 @@ class ToimitilaController extends BaseController{
 
     public static function store(){
         $params = $_POST;
-        $toimitila = new Toimitila(array(
+        $attributes = array(
             'nimi' => $params['nimi'],
             'katuosoite' => $params['katuosoite'],
             'paikkakunta' => $params['paikkakunta']
-        ));
-        $toimitila->save();
+        );        
+        $toimitila = new Toimitila($attributes);
+        $errors = $toimitila->errors();
         
-        Redirect::to('/toimitila', array('message' => 'Toimitila tallennettu.'));
+        if(count($errors) > 0){
+            View::make('toimitila/toimitila_lisaa.html',
+                    array('errors' => $errors, 'toimitila' => $toimitila));
+        } else {
+            $toimitila->save();
+            Redirect::to('/toimitila', array('message' => 'Toimitila tallennettu.'));
+        }  
     }
         
     public static function edit($id) {
@@ -43,12 +50,11 @@ class ToimitilaController extends BaseController{
         );
         
         $toimitila = new Toimitila($attributes);
-        $errors = array();
-//        $errors = $toimitila->errors();
+        $errors = $toimitila->errors();
         
         if(count($errors) > 0){
             View::make('toimitila/muokkaa.html', 
-                    array('errors' => $errors, 'attributes' => $attributes));
+                    array('errors' => $errors, 'toimitila' => $toimitila));
         } else {
             $toimitila->update();
             Redirect::to('/toimitila', array('message' => 

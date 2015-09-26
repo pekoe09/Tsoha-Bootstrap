@@ -30,7 +30,7 @@ class VarausController extends BaseController {
         list($tunnit, $minuutit, $sekunnit) = sscanf($palvelu->kesto, '%d:%d:%d');
         $kesto = new DateInterval(sprintf('PT%dH%dM', $tunnit, $minuutit));
         $lopetusaika = date_timestamp_get(date_add(new DateTime('@' . $aloitusaika), $kesto));
-        $varaus= new Varaus(array(
+        $attributes = array(
             'asiakas_id' => $params['asiakas_id'],
             'palvelu_id' => $params['palvelu_id'],
             'tyontekija_id' => $params['tyontekija_id'],
@@ -38,9 +38,18 @@ class VarausController extends BaseController {
             'aloitusaika' => date('Y-m-d H:i', $aloitusaika),
             'lopetusaika' => date('Y-m-d H:i', $lopetusaika),
             'on_peruutettu' => NULL
-        ));
-        $varaus->save();
-        Redirect::to('/', array('message' => 'Varaus tallennettu.'));
+        );
+        
+        $varaus = new Varaus($attributes);
+        $errors = $varaus->errors();
+        
+        if(count($errors) > 0){
+            View::make('varaus/varaus_lisaa.html',
+                    array('errors' => $errors, 'varaus' => $varaus));
+        } else {        
+            $varaus->save();
+            Redirect::to('/', array('message' => 'Varaus tallennettu.'));
+        }
     }
             
     public static function edit($id) {
@@ -62,12 +71,11 @@ class VarausController extends BaseController {
         );
         
         $varaus = new Varaus($attributes);
-        $errors = array();
-//        $errors = $varaus->errors();
+        $errors = $varaus->errors();
         
         if(count($errors) > 0){
             View::make('varaus/varaus_muokkaa.html', 
-                    array('errors' => $errors, 'attributes' => $attributes));
+                    array('errors' => $errors, 'varaus' => $varaus));
         } else {
             $varaus->update();
             Redirect::to('/varaus', array('message' => 
