@@ -34,6 +34,14 @@ Palvelu-tallennusta on alettu muuttaa JSON-pohjaiseksi, jotta palveluun soveltuv
 
 ## Päivitykset viikolla 4
 
-(Tapahtunut so far) Palvelu-tallennus toimii nyt JSONin avulla. Form-tagiin oli jäänyt method- ja action-attribuutit jolloin submit-tapahtumakin laukesi sen lisäksi että data lähti skriptillä kontrollerille; ilmeisesti kilpajuoksua kun välillä voitti json-POST ja välillä querystring-POST... Tämä on nyt fiksattu ja kontrollerille menee pelkästään skriptin POST json-payloadilla - mutta jostain syystä redirect ei toimi. Selaimella näkyy että palvelimelta tulee 200:na sivu, jolle ohjaus tapahtuu (näyttää vieläpä sisältävän kaiken tarpeellisen) mutta selainpa ei sitä suostu näyttämään vaan lillii edelleen muokkaus-sivulla. Epäilen liittyvän siihen, että lomakkeen oletus-submit estetään nyt palauttamalla skriptin funktiosta false sen jälkeen kun ajax-kutsu on lähtenyt... 
+Palvelu-tallennus toimii nyt JSONin avulla. Form-tagiin oli jäänyt method- ja action-attribuutit jolloin submit-tapahtumakin laukesi sen lisäksi että data lähti skriptillä kontrollerille; ilmeisesti kilpajuoksua kun välillä voitti json-POST ja välillä querystring-POST... Tämä on nyt fiksattu ja kontrollerille menee pelkästään skriptin POST json-payloadilla - mutta jostain syystä redirect ei toimi. Selaimella näkyy että palvelimelta tulee 200:na sivu, jolle ohjaus tapahtuu (näyttää vieläpä sisältävän kaiken tarpeellisen) mutta selainpa ei sitä suostu näyttämään vaan lillii edelleen muokkaus-sivulla. Epäilen liittyvän siihen, että lomakkeen oletus-submit estetään nyt palauttamalla skriptin funktiosta false sen jälkeen kun ajax-kutsu on lähtenyt... 
 
-Korjattu toimitilojen ja terapeuttien tallennuksessa olleita bugeja. Lisätty muokkaus- ja poistomahdollisuudet Asiakas- Toimitila- ja Työntekijä-tietokohteille. Palvelu-tietokohteella nyt vain poisto lisätty; muokkaus lisätään kunhan lisäys-toiminnon redirect-ongelma tulee ratkaistua.
+Korjattu toimitilojen ja terapeuttien tallennuksessa olleita bugeja. 
+
+Lisätty muokkaus- ja poistomahdollisuudet Asiakas- Toimitila- ja Työntekijä-tietokohteille. Palvelu-tietokohteella nyt vain poisto lisätty; muokkaus lisätään kunhan lisäys-toiminnon redirect-ongelma tulee ratkaistua.
+Validoinnit lisätty Asiakas-, Toimitila- ja Työntekijä-tietokohteille sekä lisäys- että muokkausnäkymiin. Virhesyöte ohjaa takaisin ao. lomakkeelle, jossa kentät on populoitu käyttäjän antamilla tiedoilla.
+
+Käyttäjän sisäänkirjautuminen sekä uloskirjautuminen on toteutettu. Sisäänkirjautuneisuus sekä kirjautuneen käyttäjän tyyppi (asiakas/työntekijä/johtaja) vaikuttaa navigaatiopalkin sisältöön. Kirjautumisen jälkeen "Kirjaudu sisään"/"Rekisteröidy" -linkit korvaantuvat "Kirjaudu ulos"-linkillä. Kirjautunut asiakas näkee "Omat tiedot" linkin, josta pääsee muuttamaan omia tietoja ja näkemään omat varaukset. Työntekijä näkee "Asiakkaat" ja "Tilastot" -linkit ja johtaja näiden lisäksi myös "Terapeutit" ja "Toimitilat" -linkit. Tätä voi testata kirjautumalla seuraavilla tunnus/salasana-yhdistelmillä:
+* asiakas: mkuovi@this.com / abc
+* tyontekijä: totte.toka@vallila.fi / xxx
+* johtaja: taina.tarkka@vallila.fi / xxx
