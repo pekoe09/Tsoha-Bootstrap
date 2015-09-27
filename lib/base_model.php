@@ -89,14 +89,10 @@
     }
     
     public function validate_email($item_name, $email, $is_optional){
-        $issues = array();
-        
-        return $issues;
+        return validate_string_length($item_name, $email, 1, 200, false);
     }
     
     public function validate_password($item_name, $password){
-        $issues = array();
-        
-        return $issues;
+        return validate_string_length($item_name, $password, 1, 40, false);
     }
   }

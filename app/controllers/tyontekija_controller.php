@@ -18,7 +18,7 @@ class TyontekijaController extends BaseController {
 
     public static function store(){
         $params = $_POST;  
-        $tyontekija = new Tyontekija(array(
+        $attributes = array(
             'sukunimi' => $params['sukunimi'],
             'etunimi' => $params['etunimi'],
             'sahkoposti' => $params['sahkoposti'],
@@ -26,7 +26,7 @@ class TyontekijaController extends BaseController {
             'aloitus_pvm' => $params['aloitus_pvm'],
             'lopetus_pvm' => $params['lopetus_pvm'],
             'salasana' => 'xyz'
-        ));
+        );
         
         $tyontekija = new Tyontekija($attributes);
         $errors = $tyontekija->errors();

@@ -90,10 +90,10 @@ class Asiakas extends Kayttaja {
     }
     
     public function validate_sahkoposti(){
-        return $this->validate_email('Sähköposti', $this->sahkoposti, false);
+        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
     }
     
     public function validate_salasana(){
-        return $this->validate_password('Salasana', $this->salasana);
+        return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
     }
 }
