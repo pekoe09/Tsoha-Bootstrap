@@ -82,10 +82,10 @@ class Toimitila extends BaseModel {
     }
     
     public function validate_katuosoite(){
-        return $this->validate_string_length('Katuosoite', $this->nimi, 1, 200, false);
+        return $this->validate_string_length('Katuosoite', $this->katuosoite, 1, 200, false);
     }
     
     public function validate_paikkakunta(){
-        return $this->validate_string_length('Paikkakunta', $this->nimi, 1, 50, false);
+        return $this->validate_string_length('Paikkakunta', $this->paikkakunta, 1, 50, false);
     }
 }

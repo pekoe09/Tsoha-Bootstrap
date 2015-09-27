@@ -8,12 +8,16 @@
       EtusivuController::index();
   });
   
-  $routes->get('/login', function(){
+  $routes->get('/kirjaudu', function(){
       KayttajaController::login();
   });
   
-  $routes->post('/login', function(){
+  $routes->post('/kirjaudu', function(){
       KayttajaController::handleLogin();
+  });
+    
+  $routes->get('/kirjaudu_ulos', function(){
+      KayttajaController::logout();
   });
 
   $routes->get('/hiekkalaatikko', function() {
@@ -127,6 +131,14 @@
   $routes->post('/asiakas/:id/poista', function($id){
       AsiakasController::destroy($id);
   });
+      
+  $routes->get('/asiakas/:id/omat_tiedot', function($id){
+      AsiakasController::ownShow($id);
+  });
+      
+  $routes->post('/asiakas/:id/omat_tiedot', function($id){
+      AsiakasController::ownUpdate($id);
+  });
   
   $routes->get('/varaus', function(){
       VarausController::index();
@@ -158,12 +170,4 @@
     
   $routes->get('/tilastot', function(){
       HelloWorldController::tilastot();
-  });
-  
-  $routes->get('/kirjaudu', function(){
-      HelloWorldController::kirjaudu();
-  });
-  
-  $routes->get('/omat_tiedot', function(){
-      HelloWorldController::omat_tiedot();
   });

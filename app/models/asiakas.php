@@ -1,8 +1,8 @@
 <?php
 
-class Asiakas extends BaseModel {
+class Asiakas extends Kayttaja {
     
-    public $id, $sukunimi, $etunimi, $sahkoposti, $salasana;
+//    public $id, $sukunimi, $etunimi, $sahkoposti, $salasana;
     
     public function __construct($attributes){
         parent::__construct($attributes);

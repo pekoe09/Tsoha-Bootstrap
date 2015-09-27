@@ -62,7 +62,7 @@ class TyontekijaController extends BaseController {
         $errors = $tyontekija->errors();
         
         if(count($errors) > 0){
-            View::make('tyontekija/muokkaa.html', 
+            View::make('tyontekija/tyontekija_muokkaa.html', 
                     array('errors' => $errors, 'tyontekija' => $tyontekija));
         } else {
             $tyontekija->update();

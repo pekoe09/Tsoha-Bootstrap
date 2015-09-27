@@ -1,23 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Lisää toimitila</h1>
+
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <form method="post" action="{{base_path}}/toimitila" class="form-horizontal">
     <div class="form-group">
         <label for="nimi" class='col-sm-2 control-label'>Nimi</label>
         <div class="col-sm-10">
-            <input class="form-control" id="nimi" name="nimi" type="text">
+            <input class="form-control" id="nimi" name="nimi" type="text" value="{{toimitila.nimi}}">
         </div>
     </div>
     <div class="form-group">
         <label for="katuosoite" class='col-sm-2 control-label'>Katuosoite</label>
         <div class="col-sm-10">
-            <input class="form-control" id="katuosoite" name="katuosoite" type="text">
+            <input class="form-control" id="katuosoite" name="katuosoite" type="text" value="{{toimitila.katuosoite}}">
         </div>
     </div>
     <div class="form-group">
         <label for="paikkakunta" class='col-sm-2 control-label'>Paikkakunta</label>
         <div class="col-sm-10">
-            <input class="form-control" id="paikkakunta" name="paikkakunta" type="text">
+            <input class="form-control" id="paikkakunta" name="paikkakunta" type="text" value="{{toimitila.paikkakunta}}">
         </div>
     </div>
     <div class="form-group">

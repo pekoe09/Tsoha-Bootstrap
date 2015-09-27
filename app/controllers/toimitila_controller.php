@@ -53,7 +53,7 @@ class ToimitilaController extends BaseController{
         $errors = $toimitila->errors();
         
         if(count($errors) > 0){
-            View::make('toimitila/muokkaa.html', 
+            View::make('toimitila/toimitila_muokkaa.html', 
                     array('errors' => $errors, 'toimitila' => $toimitila));
         } else {
             $toimitila->update();

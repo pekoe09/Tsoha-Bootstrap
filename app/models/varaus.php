@@ -55,6 +55,38 @@ class Varaus extends BaseModel {
         return null;
     }
     
+    public static function findForCustomer($asiakas_id){
+        $statement = 'SELECT v.id, v.palvelu_id, p.nimi AS palvelu_nimi,'
+                . ' v.tyontekija_id, t.etunimi, t.sukunimi,'
+                . ' v.toimitila_id, o.nimi AS toimitila_nimi, o.katuosoite,'
+                . ' v.aloitusaika, v.on_peruutettu'
+                . ' FROM varaus v'
+                . ' INNER JOIN palvelu p ON v.palvelu_id = p.id'
+                . ' INNER JOIN tyontekija t ON v.tyontekija_id = t.id'
+                . ' INNER JOIN toimitila o ON v.toimitila_id = o.id'
+                . ' WHERE asiakas_id = :asiakas_id ORDER BY aloitusaika DESC';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('asiakas_id' => $asiakas_id));
+        $rows = $query->fetchAll();
+        $varaukset = array();
+        foreach($rows as $row)
+            $varaukset[] = new Asiakasvaraus(array(
+                'id' => $row['id'],
+                'asiakas_id' => $asiakas_id,
+                'palvelu_id' => $row['palvelu_id'],
+                'palvelu_nimi' => $row['palvelu_nimi'],
+                'tyontekija_id' => $row['tyontekija_id'],
+                'etunimi'=> $row['etunimi'],
+                'sukunimi' => $row['sukunimi'],
+                'toimitila_id' => $row['toimitila_id'],
+                'toimitila_nimi' => $row['toimitila_nimi'],
+                'katuosoite' => $row['katuosoite'],
+                'aloitusaika' => $row['aloitusaika'],
+                'on_peruutettu' => $row['on_peruutettu']
+            ));
+        return $varaukset;
+    }
+    
     public function save(){
         $statement = 'INSERT INTO varaus ("asiakas_id", "palvelu_id", "tyontekija_id", '
                     . '"toimitila_id", "aloitusaika", "lopetusaika", "on_peruutettu")'

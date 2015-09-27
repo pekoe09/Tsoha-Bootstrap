@@ -1,9 +1,10 @@
 <?php
 
-class Tyontekija extends BaseModel{
+class Tyontekija extends Kayttaja{
     
-    public $id, $sukunimi, $etunimi, $sahkoposti, $on_johtaja, $aloitus_pvm, $lopetus_pvm, $salasana;
-    
+//    public $id, $sukunimi, $etunimi, $sahkoposti, $on_johtaja, $aloitus_pvm, $lopetus_pvm, $salasana;
+    public $on_johtaja, $aloitus_pvm, $lopetus_pvm;
+
     public function __construct($attributes){
         parent::__construct($attributes);
         $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti',

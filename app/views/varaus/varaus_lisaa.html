@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Uusi varaus</h1>
 <form method="post" action="{{base_path}}/varaus" class="form-horizontal">
-    <input type='hidden' name='asiakas_id' id='asiakas_id' value='1'> <!-- tähän pitää poimia kirjautuneen asiakkaan id SESSION-tiedoista -->
+    <input type='hidden' name='asiakas_id' id='asiakas_id' value='{{user_logged_in.id}}'>
     <div class="form-group">
         <label for="palvelu_id" class='col-sm-2 control-label'>Terapia</label>
         <div class="col-sm-10">

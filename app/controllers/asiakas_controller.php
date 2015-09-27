@@ -70,5 +70,37 @@ class AsiakasController extends BaseController {
         $asiakas->destroy();        
         Redirect::to('/asiakas', 
                 array('message' => 'Asiakas (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') poistettu.'));
+    }    
+        
+    public static function ownShow($id){
+        $asiakas = Asiakas::find($id);
+        $varaukset = Varaus::findForCustomer($id);
+        View::make('asiakas/omat_tiedot.html', array(
+            'asiakas'=>$asiakas,
+            'varaukset'=>$varaukset
+            ));
+    }
+    
+    public static function ownUpdate($id){
+        $params = $_POST;
+        $attributes = array(
+            'id' => $id,
+            'sukunimi' => $params['sukunimi'],
+            'etunimi' => $params['etunimi'],
+            'sahkoposti' => $params['sahkoposti'],
+            'salasana' => $params['salasana']
+        );
+        
+        $asiakas = new Asiakas($attributes);
+        $errors = $asiakas->errors();
+        
+        if(count($errors) > 0){
+            View::make('asiakas/' .$id . 'omat_tiedot.html', 
+                    array('errors' => $errors, 'asiakas' => $asiakas));
+        } else {
+            $asiakas->update();
+            Redirect::to('/asiakas/' . $id . '/omat_tiedot', array('message' => 
+                'Tietosi on päivitetty!'));
+        }
     }
 }

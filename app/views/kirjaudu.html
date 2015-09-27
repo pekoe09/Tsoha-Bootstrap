@@ -12,17 +12,17 @@
 </div>
 {% endif %}
 
-<form class="form-horizontal" method="post" action="{{base_path}}/login">
+<form class="form-horizontal" method="post" action="{{base_path}}/kirjaudu">
     <div class="form-group">
-        <label for="ktunnus" class='col-sm-2 control-label'>Käyttäjätunnus</label>
+        <label for="sahkoposti" class='col-sm-2 control-label'>Sähköposti</label>
         <div class="col-sm-10">
-            <input class="form-control" type="email" id="ktunnus" value="{{sahkoposti}}">
+            <input class="form-control" type="email" id="sahkoposti" name="sahkoposti" value="{{sahkoposti}}">
         </div>
     </div>
     <div class="form-group">
         <label for="salasana" class='col-sm-2 control-label'>Salasana</label>
         <div class="col-sm-10">
-            <input class="form-control" type="password" id="salasana">
+            <input class="form-control" type="password" id="salasana" name="salasana">
         </div>
     </div>
     <div class="form-group">

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Omat tietosi</h1>
+
+<h2>Muokkaa tietojasi</h2>
+
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+
+<form method="post" action="{{base_path}}/asiakas/{{asiakas.id}}/muokkaa" class="form-horizontal">
+    <div class="form-group">
+        <label for="sukunimi" class='col-sm-2 control-label'>Sukunimi</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="sukunimi" name="sukunimi" type="text" value="{{asiakas.sukunimi}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="etunimi" class='col-sm-2 control-label'>Etunimi</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="etunimi" name="etunimi" type="text" value="{{asiakas.etunimi}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="sahkoposti" class='col-sm-2 control-label'>Sähköposti</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="sahkoposti" name="sahkoposti" type="text" value="{{asiakas.sahkoposti}}">
+        </div>
+    </div>
+        <div class="form-group">
+        <label for="salasana" class='col-sm-2 control-label'>Salasana</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="salasana" name="salasana" type="password">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="salasana2" class='col-sm-2 control-label'>Salasana uudelleen</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="salasana2" name="salasana2" type="password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type='submit' class='btn btn-primary'>Tallenna</button>
+        </div>
+    </div>
+</form>
+
+<h2>Varauksesi</h2>
+
+<a href="{{base_path}}/varaus/uusi" class="btn btn-primary" role="button">Tee uusi varaus!</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Terapia</td>
+            <td>Ajankohta</td>
+            <td>Terapeutti</td>
+            <td>Toimipaikka</td>
+            <td>Peruutettu</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for varaus in varaukset %}
+        <tr>
+            <td>{{varaus.palvelu_nimi}}</td>
+            <td>{{varaus.aloitusaika}}</td>  
+            <td>{{varaus.etunimi ~ ' ' ~ varaus.sukunimi}}</td>
+            <td>{{varaus.toimitila_nimi}}</td>   
+            <td>{{varaus.on_peruutettu}}</td>  
+            <td>{{forms.destroy_button("#{base_path}/varaus/#{varaus.id}/poista")}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -41,18 +41,30 @@
                 <!-- Navigaation linkit -->
                 <li><a href="{{base_path}}/varaus/uusi">Varaa aika</a></li>
                 <li><a href="{{base_path}}/palvelu">Palvelut</a></li>
-                <!-- nämä näkyvät vain johtajalle -->
-                <li><a href="{{base_path}}/tyontekija">Terapeutit</a></li>
-                <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
-                <!-- nämä näkyvät työntekijöille -->
-                <li><a href="{{base_path}}/asiakas">Asiakkaat</a></li>
-                <li><a href="{{base_path}}/tilastot">Tilastot</a></li>            
+                {% if user_logged_in %}                    
+                    {% if user_logged_in.tyyppi == 'johtaja' %}
+                    <!-- nämä näkyvät vain johtajalle -->
+                    <li><a href="{{base_path}}/tyontekija">Terapeutit</a></li>
+                    <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
+                    {% endif %}
+                    {% if user_logged_in.tyyppi == 'johtaja' or user_logged_in.tyyppi == 'tyontekija' %}
+                    <!-- nämä näkyvät kaikille työntekijöille -->
+                    <li><a href="{{base_path}}/asiakas">Asiakkaat</a></li>
+                    <li><a href="{{base_path}}/tilastot">Tilastot</a></li> 
+                    {% endif %}
+                {% endif %}
             </ul>            
             <ul class="nav navbar-nav navbar-right">
-                <!-- omat tiedot näkyy vain kirjautuneelle asiakkaalle -->
-                <li><a href="{{base_path}}/omat_tiedot">Omat tiedot</a></li>
+                {% if user_logged_in %}
+                    {% if user_logged_in.tyyppi == 'asiakas' %}
+                    <li><a href="{{base_path}}/asiakas/{{user_logged_in.id}}/omat_tiedot">Omat tiedot</a></li>
+                    {% endif %}
+                <li><a href="{{base_path}}/kirjaudu_ulos">Kirjaudu ulos</a></li>
+                {% endif %}
+                {% if not user_logged_in %}
                 <li><a href="{{base_path}}/asiakas/uusi">Rekisteröidy</a></li>
                 <li><a href="{{base_path}}/kirjaudu">Kirjaudu sisään</a></li>
+                {% endif %}
             </ul>
         </div>
       </div>
