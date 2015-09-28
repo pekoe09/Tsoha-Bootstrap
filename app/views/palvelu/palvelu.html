@@ -1,20 +1,27 @@
 {% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>{{palvelu.nimi}}</h1>
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
-<button class="btn btn-danger">Poista</button>
-<button class="btn btn-primary">Muokkaa</button>
+{% if user_logged_in and user_logged_in.tyyppi == 'johtaja' %}  
+    {{forms.edit_button("#{base_path}/palvelu/#{palvelu.id}/muokkaa")}}                
+    {{forms.destroy_button("#{base_path}/palvelu/#{palvelu.id}/poista")}}
+{% endif %}
+
 <p>{{palvelu.kuvaus}}</p>
 <p>Terapiakäynnin kesto: {{palvelu.kesto}}</p>
 <h2>Terapeutit</h2>
 <ul>
-    <li>Terttu Testaaja</li>
+    {% for tyontekija in tyontekijat %}
+    <li>{{tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi}}</li>
+    {% endfor %}
 </ul>
 
 <h2>Toimipaikat</h2>
 <ul>
-    <li>Allu (Aleksis Kiven katu 9, Helsinki)</li>
-    <li>Portti (Maistraatinportti 2, Helsinki)</li>
+    {% for toimitila in toimitilat %}
+    <li>{{toimitila.nimi ~ ' (' ~ toimitila.katuosoite ~ ', ' ~ toimitila.paikkakunta ~ ')'}}</li>
+    {% endfor %}
 </ul>
 
 <a href="{{base_path}}/palvelu" class="btn btn-link" role="button">Takaisin palvelulistaan</a>

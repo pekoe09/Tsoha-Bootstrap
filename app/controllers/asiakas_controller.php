@@ -3,20 +3,24 @@
 class AsiakasController extends BaseController {
     
     public static function index(){
+        self::check_logged_in(array("tyontekija", "johtaja"));
         $asiakkaat = Asiakas::all();
         View::make('asiakas/asiakas_lista.html', array('asiakkaat'=>$asiakkaat));
     }
     
     public static function show($id){
+        self::check_logged_in(array("tyontekija", "johtaja"));
         $asiakas = Asiakas::find($id);
         View::make('asiakas/asiakas.html', array('asiakas'=>$asiakas));
     }
     
     public static function create(){
+        self::check_logged_in(array("tyontekija", "johtaja"));
         View::make('asiakas/asiakas_lisaa.html');
     }
 
     public static function store(){
+        self::check_logged_in(array("tyontekija", "johtaja"));
         $params = $_POST;
         $attributes = array(
             'sukunimi' => $params['sukunimi'],
@@ -37,11 +41,13 @@ class AsiakasController extends BaseController {
     }
     
     public static function edit($id) {
+        self::check_logged_in(array("tyontekija", "johtaja"));
         $asiakas = Asiakas::find($id);
         View::make('asiakas/asiakas_muokkaa.html', array('asiakas' => $asiakas));
     }
     
     public static function update($id) {
+        self::check_logged_in(array("tyontekija", "johtaja"));
         $params = $_POST;
         $attributes = array(
             'id' => $id,
@@ -65,7 +71,7 @@ class AsiakasController extends BaseController {
     }
     
     public static function destroy($id) {
-//        $asiakas = new Asiakas(array('id' => $id));
+        self::check_logged_in(array("tyontekija", "johtaja"));
         $asiakas = Asiakas::find($id);
         $asiakas->destroy();        
         Redirect::to('/asiakas', 
@@ -73,6 +79,7 @@ class AsiakasController extends BaseController {
     }    
         
     public static function ownShow($id){
+        self::check_logged_in(array("asiakas"));
         $asiakas = Asiakas::find($id);
         $varaukset = Varaus::findForCustomer($id);
         View::make('asiakas/omat_tiedot.html', array(
@@ -82,6 +89,7 @@ class AsiakasController extends BaseController {
     }
     
     public static function ownUpdate($id){
+        self::check_logged_in(array("asiakas"));
         $params = $_POST;
         $attributes = array(
             'id' => $id,

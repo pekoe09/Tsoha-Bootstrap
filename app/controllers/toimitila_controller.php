@@ -8,15 +8,18 @@ class ToimitilaController extends BaseController{
     }
     
     public static function show($id){
+        self::check_logged_in(array("johtaja"));
         $toimitila = Toimitila::find($id);
         View::make('toimitila/toimitila.html', array('toimitila'=>$toimitila));
     }
     
     public static function create(){
+        self::check_logged_in(array("johtaja"));
         View::make('toimitila/toimitila_lisaa.html');
     }
 
     public static function store(){
+        self::check_logged_in(array("johtaja"));
         $params = $_POST;
         $attributes = array(
             'nimi' => $params['nimi'],
@@ -36,11 +39,13 @@ class ToimitilaController extends BaseController{
     }
         
     public static function edit($id) {
+        self::check_logged_in(array("johtaja"));
         $toimitila = Toimitila::find($id);
         View::make('toimitila/toimitila_muokkaa.html', array('toimitila' => $toimitila));
     }
     
     public static function update($id) {
+        self::check_logged_in(array("johtaja"));
         $params = $_POST;
         $attributes = array(
             'id' => $id,
@@ -63,6 +68,7 @@ class ToimitilaController extends BaseController{
     }
     
     public static function destroy($id) {
+        self::check_logged_in(array("johtaja"));
         $toimitila = Toimitila::find($id);
         $toimitila->destroy();        
         Redirect::to('/toimitila', 

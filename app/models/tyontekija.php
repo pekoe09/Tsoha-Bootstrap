@@ -54,6 +54,30 @@ class Tyontekija extends Kayttaja{
         return null;
     }
     
+    public static function findForService($palvelu_id){
+        $statement = 'SELECT t.id, t.sukunimi, t.etunimi, t.sahkoposti, t.on_johtaja,'
+                . ' t.aloitus_pvm, t.lopetus_pvm'
+                . ' FROM tyontekija t'
+                . ' INNER JOIN tyontekija_palvelu tp ON t.id = tp.tyontekija_id'
+                . ' WHERE tp.palvelu_id = :palvelu_id'
+                . ' ORDER BY t.sukunimi, t.etunimi';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('palvelu_id' => $palvelu_id));
+        $rows = $query->fetchAll();
+        $tyontekijat = array();
+        foreach($rows as $row)
+            $tyontekijat[] = new Tyontekija(array(
+                'id' => $row['id'],
+                'sukunimi' => $row['sukunimi'],
+                'etunimi' => $row['etunimi'],
+                'sahkoposti' => $row['sahkoposti'],
+                'on_johtaja' => $row['on_johtaja'],
+                'aloitus_pvm' => $row['aloitus_pvm'],
+                'lopetus_pvm' => $row['lopetus_pvm']
+            ));
+        return $tyontekijat;
+    }
+    
     public function save(){
         $statement = 'INSERT INTO tyontekija ("sukunimi", "etunimi", "sahkoposti", "on_johtaja", "aloitus_pvm", "lopetus_pvm", "salasana")'
                     . 'VALUES (:sukunimi, :etunimi, :sahkoposti, false, :aloitus_pvm, :lopetus_pvm, :salasana) RETURNING id';

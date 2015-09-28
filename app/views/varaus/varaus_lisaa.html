@@ -2,7 +2,20 @@
 {% block content %}
 <h1>Uusi varaus</h1>
 <form method="post" action="{{base_path}}/varaus" class="form-horizontal">
+    {% if user_logged_in.tyyppi == 'asiakas' %}
     <input type='hidden' name='asiakas_id' id='asiakas_id' value='{{user_logged_in.id}}'>
+    {% else %}
+    <div class="form-group">
+        <label for="asiakas_id" class='col-sm-2 control-label'>Asiakas</label>
+        <div class="col-sm-10">
+            <select class="form-control" id="asiakas_id" name="asiakas_id">
+                {% for asiakas in asiakkaat %}
+                <option value="{{asiakas.id}}">{{asiakas.sukunimi ~ ', ' ~ asiakas.etunimi}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    {% endif %}
     <div class="form-group">
         <label for="palvelu_id" class='col-sm-2 control-label'>Terapia</label>
         <div class="col-sm-10">

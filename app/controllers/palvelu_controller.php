@@ -9,10 +9,17 @@ class PalveluController extends BaseController{
     
     public static function show($id){
         $palvelu = Palvelu::find($id);
-        View::make('palvelu/palvelu.html', array('palvelu'=>$palvelu));
+        $tyontekijat = Tyontekija::findForService($id);
+        $toimitilat = Toimitila::findForService($id);
+        View::make('palvelu/palvelu.html', array(
+            'palvelu' => $palvelu,
+            'tyontekijat' => $tyontekijat,
+            'toimitilat' => $toimitilat
+        ));
     }
     
     public static function create(){
+        self::check_logged_in(array("johtaja"));
         $toimitilat = Toimitila::all();
         $tyontekijat =  Tyontekija::all();
         View::make('palvelu/palvelu_lisaa.html', array(
@@ -21,7 +28,8 @@ class PalveluController extends BaseController{
         ));
     }
 
-    public static function store(){        
+    public static function store(){     
+        self::check_logged_in(array("johtaja"));
         $request = file_get_contents('php://input');
         $input = json_decode($request, true);
         $palvelu = new Palvelu(array(
@@ -39,11 +47,13 @@ class PalveluController extends BaseController{
     }    
     
     public static function edit($id) {
+        self::check_logged_in(array("johtaja"));
         $palvelu = Palvelu::find($id);
         View::make('palvelu/palvelu_muokkaa.html', array('palvelu' => $palvelu));
     }
     
     public static function update($id) {
+        self::check_logged_in(array("johtaja"));
         $request = file_get_contents('php://input');
         $input = json_decode($request, true);
         $palvelu = new Palvelu(array(
@@ -67,7 +77,7 @@ class PalveluController extends BaseController{
     }
     
     public static function destroy($id) {
-//        $asiakas = new Asiakas(array('id' => $id));
+        self::check_logged_in(array("johtaja"));
         $palvelu = Palvelu::find($id);
         $palvelu->destroy();        
         Redirect::to('/palvelu', 

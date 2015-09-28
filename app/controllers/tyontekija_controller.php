@@ -3,20 +3,24 @@
 class TyontekijaController extends BaseController {
     
     public static function index(){
+        self::check_logged_in(array("johtaja"));
         $tyontekijat = Tyontekija::all();
         View::make('tyontekija/tyontekija_lista.html', array('tyontekijat'=>$tyontekijat));
     }
     
     public static function show($id){
+        self::check_logged_in(array("johtaja"));
         $tyontekija = Tyontekija::find($id);
         View::make('tyontekija/tyontekija.html', array('tyontekija'=>$tyontekija));
     }
     
     public static function create(){
+        self::check_logged_in(array("johtaja"));
         View::make('tyontekija/tyontekija_lisaa.html');
     }
 
     public static function store(){
+        self::check_logged_in(array("johtaja"));
         $params = $_POST;  
         $attributes = array(
             'sukunimi' => $params['sukunimi'],
@@ -41,11 +45,13 @@ class TyontekijaController extends BaseController {
     }
         
     public static function edit($id) {
+        self::check_logged_in(array("johtaja"));
         $tyontekija = Tyontekija::find($id);
         View::make('tyontekija/tyontekija_muokkaa.html', array('tyontekija' => $tyontekija));
     }
     
     public static function update($id) {
+        self::check_logged_in(array("johtaja"));
         $params = $_POST;
         $attributes = array(
             'id' => $id,
@@ -72,6 +78,7 @@ class TyontekijaController extends BaseController {
     }
     
     public static function destroy($id) {
+        self::check_logged_in(array("johtaja"));
         $tyontekija = Tyontekija::find($id);
         $tyontekija->destroy();        
         Redirect::to('/tyontekija', 

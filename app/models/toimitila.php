@@ -44,6 +44,29 @@ class Toimitila extends BaseModel {
         return null;
     }
     
+    public static function findForService($palvelu_id){
+        $statement = 'SELECT t.id, t.nimi, t.katuosoite, t.paikkakunta'
+                . ' FROM toimitila t'
+                . ' INNER JOIN toimitila_palvelu tp ON t.id = tp.toimitila_id'
+                . ' WHERE tp.palvelu_id = :palvelu_id'
+                . ' ORDER BY t.nimi';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('palvelu_id' => $palvelu_id));
+        $rows = $query->fetchAll();
+        $toimitilat = array();
+        foreach($rows as $row){
+            $toimitilat[] = new Toimitila(array(
+                'id' => $row['id'],
+                'nimi' => $row['nimi'],
+                'katuosoite' => $row['katuosoite'],
+                'paikkakunta' => $row['paikkakunta']
+            ));
+        }
+        return $toimitilat;        
+        
+        return null;
+    }
+    
     public function save(){
         $statement = 'INSERT INTO toimitila ("nimi", "katuosoite", "paikkakunta")'
                     . 'VALUES (:nimi, :katuosoite, :paikkakunta) RETURNING id';

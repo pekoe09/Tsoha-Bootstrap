@@ -3,7 +3,10 @@
 {% block content %}
 <h1>Toimitilat</h1>
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+{% if user_logged_in and user_logged_in.tyyppi == 'johtaja' %}
 <a href="{{base_path}}/toimitila/uusi" class="btn btn-primary" role="button">Lisää toimitila</a>
+{% endif %}
+
 <table class="table">
     <thead>
         <tr>
@@ -19,9 +22,11 @@
         <tr>
             <td>{{toimitila.nimi}}</td>
             <td>{{toimitila.katuosoite}}</td>
-            <td>{{toimitila.paikkakunta}}</td>            
-            <td>{{forms.edit_button("#{base_path}/toimitila/#{toimitila.id}/muokkaa")}}</td>
-            <td>{{forms.destroy_button("#{base_path}/toimitila/#{toimitila.id}/poista")}}</td>
+            <td>{{toimitila.paikkakunta}}</td>
+            {% if user_logged_in and user_logged_in.tyyppi == 'johtaja' %}                
+                <td>{{forms.edit_button("#{base_path}/toimitila/#{toimitila.id}/muokkaa")}}</td>
+                <td>{{forms.destroy_button("#{base_path}/toimitila/#{toimitila.id}/poista")}}</td>                
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

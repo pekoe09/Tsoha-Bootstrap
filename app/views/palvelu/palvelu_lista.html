@@ -3,7 +3,10 @@
 {% block content %}
 <h1>Tarjottavat terapiapalvelut</h1>
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+{% if user_logged_in and user_logged_in.tyyppi == 'johtaja' %}
 <a href="{{base_path}}/palvelu/uusi" class="btn btn-primary" role="button">Lisää palvelu</a>
+{% endif %}
+
 <table class="table">
     <thead>
         <tr>
@@ -20,8 +23,10 @@
             <td>{{palvelu.nimi}}</td>
             <td>{{palvelu.kesto}}</td>
             <td><a href="palvelu/{{palvelu.id}}">Lisätietoja</a></td>
-            <td>{{forms.edit_button("#{base_path}/palvelu/#{palvelu.id}/muokkaa")}}</td>
-            <td>{{forms.destroy_button("#{base_path}/palvelu/#{palvelu.id}/poista")}}</td>
+            {% if user_logged_in and user_logged_in.tyyppi == 'johtaja' %}  
+                <td>{{forms.edit_button("#{base_path}/palvelu/#{palvelu.id}/muokkaa")}}</td>
+                <td>{{forms.destroy_button("#{base_path}/palvelu/#{palvelu.id}/poista")}}</td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>
