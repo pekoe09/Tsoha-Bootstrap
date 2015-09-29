@@ -2,7 +2,6 @@
 
 class Tyontekija extends Kayttaja{
     
-//    public $id, $sukunimi, $etunimi, $sahkoposti, $on_johtaja, $aloitus_pvm, $lopetus_pvm, $salasana;
     public $on_johtaja, $aloitus_pvm, $lopetus_pvm;
 
     public function __construct($attributes){
@@ -118,21 +117,21 @@ class Tyontekija extends Kayttaja{
         ));
     }
     
-    public function validate_sukunimi(){
-        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
-    }
-    
-    public function validate_etunimi(){
-        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
-    }
-    
-    public function validate_sahkoposti(){
-        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
-    }
-    
-    public function validate_salasana(){
-        return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
-    }
+//    public function validate_sukunimi(){
+//        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
+//    }
+//    
+//    public function validate_etunimi(){
+//        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
+//    }
+//    
+//    public function validate_sahkoposti(){
+//        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
+//    }
+//    
+//    public function validate_salasana(){
+//        return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
+//    }
     
     public function validate_aloitus_pvm(){
         return $this->validate_date('Aloituspvm', $this->aloitus_pvm, null, null, false);

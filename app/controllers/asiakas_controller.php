@@ -15,12 +15,10 @@ class AsiakasController extends BaseController {
     }
     
     public static function create(){
-        self::check_logged_in(array("tyontekija", "johtaja"));
         View::make('asiakas/asiakas_lisaa.html');
     }
 
     public static function store(){
-        self::check_logged_in(array("tyontekija", "johtaja"));
         $params = $_POST;
         $attributes = array(
             'sukunimi' => $params['sukunimi'],
@@ -35,7 +33,8 @@ class AsiakasController extends BaseController {
             View::make('asiakas/asiakas_lisaa.html', 
                     array('errors' => $errors, 'asiakas' => $asiakas));
         } else {
-            $asiakas->save();        
+            $asiakas->save();  
+            
             Redirect::to('/', array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));
         }
     }

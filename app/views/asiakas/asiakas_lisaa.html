@@ -31,10 +31,16 @@
             <input class="form-control" id="sahkoposti" name="sahkoposti" type="text" value="{{asiakas.sahkoposti}}">
         </div>
     </div>
-        <div class="form-group">
+    <div class="form-group">
         <label for="salasana" class='col-sm-2 control-label'>Salasana</label>
         <div class="col-sm-10">
             <input class="form-control" id="salasana" name="salasana" type="password">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="salasana2" class='col-sm-2 control-label'>Salasana uudelleen</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="salasana2" name="salasana2" type="password">
         </div>
     </div>
     <div class="form-group">
@@ -44,5 +50,7 @@
     </div>
 </form>
 
+{% if user_logged_in and (user_logged_in.tyyppi == 'johtaja' or user_logged_in.tyyppi == 'tyontekija') %}
 <a href="{{base_path}}/asiakas" class="btn btn-link" role="button">Takaisin asiakaslistaan</a>
+{% endif %}
 {% endblock %}

@@ -2,7 +2,12 @@
 
 class Kayttaja extends BaseModel {
     
-    public $id, $sahkoposti, $salasana, $etunimi, $sukunimi, $tyyppi;
+    public $id, $sahkoposti, $salasana, $salasana2, $etunimi, $sukunimi, $tyyppi;
+    
+    public function __construct($attributes){
+        parent::__construct($attributes);
+        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti', 'validate_salasana');
+    }
     
     public static function authenticate($sahkoposti, $salasana){
         // etsitään käyttäjää ensin asiakas-taulusta ja sitten tyontekija-taulusta
@@ -60,5 +65,23 @@ class Kayttaja extends BaseModel {
             ));
             return $user;
         }
+    }
+    
+    public function validate_sukunimi(){
+        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
+    }
+    
+    public function validate_etunimi(){
+        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
+    }
+    
+    public function validate_sahkoposti(){
+        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
+    }
+    
+    public function validate_salasana(){
+        if($this->salasana !== $this->salasana2)
+            return array('error' => 'Annetut salasanat eivät täsmää!');
+        return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
     }
 }

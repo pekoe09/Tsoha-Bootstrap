@@ -153,4 +153,42 @@ class Varaus extends BaseModel {
     public function validate_lopetusaika(){
         return $this->validate_date('Lopetusaika', $this->lopetusaika, null, null, false);
     }
+    
+    public function check_overlaps(){
+        $errors = array();
+        $dimensions = array(
+            'asiakas' => $this->asiakas_id,
+            'tyontekija'  => $this->tyontekija_id,
+            'toimitila' => $this->toimitila_id
+        );
+        $input = array(
+            'aloitusaika' => $this->aloitusaika,
+            'lopetusaika' => $this->lopetusaika
+        );
+        
+        foreach($dimensions as $key => $value){
+            $statement = "SELECT COUNT(*) AS count FROM varaus"
+                    . " WHERE " . $key . "_id = " . $value
+                    . " AND ((aloitusaika <= :aloitusaika AND lopetusaika >= :aloitusaika)"
+                        . " OR (aloitusaika <= :lopetusaika AND lopetusaika >= :lopetusaika)"
+                        . " OR (aloitusaika >= :aloitusaika AND lopetusaika <= :lopetusaika))"
+                    . " AND NOT on_peruutettu";
+            $errors = array();
+            $query = DB::connection()->prepare($statement);
+            $query->execute($input);
+            $row = $query->fetch();
+            if($row && $row['count'] > 0){
+                $varattu;
+                if($key == 'asiakas')
+                    $varattu = 'Sinulla';
+                else if($key == 'tyontekija')
+                    $varattu = 'Terapeutilla';
+                else
+                    $varattu = 'Toimitilassa';                        
+                $errors[] = $varattu . " on toinen päällekäinen varaus; varausta ei voi tehdä.";
+            }
+        }
+        
+        return $errors;
+    }
 }

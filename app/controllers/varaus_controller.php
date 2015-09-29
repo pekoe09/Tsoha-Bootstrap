@@ -49,6 +49,11 @@ class VarausController extends BaseController {
         $varaus = new Varaus($attributes);
         $errors = $varaus->errors();
         
+        // tarkistetaan resurssien ja asiakkaan saatavuus varausajalle 
+        if(count($errors) == 0){
+            $errors = array_merge($errors, $varaus->check_overlaps());
+        }
+        
         if(count($errors) > 0){
             View::make('varaus/varaus_lisaa.html',
                     array('errors' => $errors, 'varaus' => $varaus));
@@ -80,6 +85,11 @@ class VarausController extends BaseController {
         
         $varaus = new Varaus($attributes);
         $errors = $varaus->errors();
+                
+        // tarkistetaan resurssien ja asiakkaan saatavuus varausajalle 
+        if(count($errors) == 0){
+            $errors = array_merge($errors, $varaus->check_overlaps());
+        }
         
         if(count($errors) > 0){
             View::make('varaus/varaus_muokkaa.html', 
@@ -97,5 +107,13 @@ class VarausController extends BaseController {
         $varaus->destroy();        
         Redirect::to('/varaus', 
                 array('message' => 'Varaus poistettu.'));
+    }
+    
+    private static function checkAvailability($dimensio, $aloitusaika, $lopetusaika, $errors){
+        $issues = array();
+        
+        
+        $issues = array('error' => $error);
+        return array_merge($errors, $issues);
     }
 }
