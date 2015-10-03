@@ -93,15 +93,32 @@ class Toimitila extends BaseModel {
     }
     
     public function destroy(){
+        // poistetaan ensin toimitilan ja palvelun liitostiedot sekä 
+        // toimitilan aukiolopäivätiedot, sitten vasta itse toimitila
+        $statement = 'DELETE FROM toimitila_palvelu WHERE "toimitila_id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        
+        $statement = 'DELETE FROM aukiolopaiva WHERE "toimitila_id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        
         $statement = 'DELETE FROM toimitila WHERE "id" = :id';
-                $query = DB::connection()->prepare($statement);
+        $query = DB::connection()->prepare($statement);
         $query->execute(array(
             'id' => $this->id
         ));
     }
     
     public function validate_nimi(){
-        return $this->validate_string_length('Nimi', $this->nimi, 1, 100, false);
+        return array_merge(
+                $this->validate_string_length('Nimi', $this->nimi, 1, 100, false),
+                $this->validate_string_uniqueness($this->nimi, 'toimitila', 'nimi', $this->id)        
+            );
     }
     
     public function validate_katuosoite(){
@@ -110,5 +127,23 @@ class Toimitila extends BaseModel {
     
     public function validate_paikkakunta(){
         return $this->validate_string_length('Paikkakunta', $this->paikkakunta, 1, 50, false);
+    }
+                
+    public function validate_destroyability(){
+        $issues = array();
+        
+        $statement = "SELECT COUNT(*) AS count FROM varaus WHERE toimitila_id = :toimitila_id";
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('toimitila_id' => $this->id));
+        $row = $query->fetch();
+        if($row){
+            if($row['count'] > 0){
+                $issues[] = 'Toimitilaa ' . $this->nimi . ' ei pystytä poistamaan; toimitilaan on liitetty varaustietoja.';
+            }
+        } else {
+            $issues[] = 'Toimitilan ' . $this->nimi . ' poistettavuutta ei pystytty tarkistamaan.';
+        }
+        
+        return $issues;
     }
 }

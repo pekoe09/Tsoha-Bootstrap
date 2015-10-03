@@ -56,6 +56,16 @@ class Palvelu extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+    
+    public function saveOffices($soveltuvat_toimitilat){
+        foreach($soveltuvat_toimitilat as $toimitila){
+            
+        }
+    }
+    
+    public function saveTherapists($tarjoavat_tyontekijat){
+        
+    }
         
     public function update(){
         $statement = 'UPDATE palvelu SET "nimi" = :nimi, "kesto" = :kesto, "kuvaus" = :kuvaus,'
@@ -70,15 +80,33 @@ class Palvelu extends BaseModel {
     }
     
     public function destroy(){
+        // poistetaan ensin palvelun liitostiedot työntekijöihin sekä toimitiloihin,
+        // sitten vasta itse palvelu
+        
+        $statement = 'DELETE FROM toimitila_palvelu WHERE "palvelu_id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        
+        $statement = 'DELETE FROM tyontekija_palvelu WHERE "palvelu_id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        
         $statement = 'DELETE FROM palvelu WHERE "id" = :id';
-                $query = DB::connection()->prepare($statement);
+        $query = DB::connection()->prepare($statement);
         $query->execute(array(
             'id' => $this->id
         ));
     }
     
     public function validate_nimi(){
-        return $this->validate_string_length('Nimi', $this->nimi, 1, 100, false);
+        return array_merge(
+                $this->validate_string_length('Nimi', $this->nimi, 1, 100, false),
+                $this->validate_string_uniqueness($this->nimi, 'palvelu', 'nimi', $this->id)
+            );
     }
     
     public function validate_kesto(){
@@ -88,5 +116,23 @@ class Palvelu extends BaseModel {
     
     public function validate_kuvaus(){
         return $this->validate_string_length('Kuvaus', $this->kuvaus, 0, 5000, true);
+    }
+            
+    public function validate_destroyability(){
+        $issues = array();
+        
+        $statement = "SELECT COUNT(*) AS count FROM varaus WHERE palvelu_id = :palvelu_id";
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('palvelu_id' => $this->id));
+        $row = $query->fetch();
+        if($row){
+            if($row['count'] > 0){
+                $issues[] = 'Palvelua ' . $this->nimi . ' ei pystytä poistamaan; palveluun on liitetty varaustietoja.';
+            }
+        } else {
+            $issues[] = 'Palvelun ' . $this->nimi . ' poistettavuutta ei pystytty tarkistamaan.';
+        }
+        
+        return $issues;
     }
 }

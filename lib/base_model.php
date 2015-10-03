@@ -95,4 +95,26 @@
     public function validate_password($item_name, $password){
         return validate_string_length($item_name, $password, 1, 40, false);
     }
+    
+    public function validate_string_uniqueness($value, $table, $field, $id){
+        $issues = array();
+        
+        if($id == null)
+            $id = 0;
+        $statement = "SELECT COUNT(*) AS count FROM " . $table 
+                . " WHERE " . $field . " = '" . $value . "'"
+                . " AND id <> " . $id;
+        $query = DB::connection()->prepare($statement);
+        $query->execute();
+        $row = $query->fetch();
+        if($row){
+            if($row['count'] > 0){
+                $issues[] = 'Järjestelmään on jo tallennettu ' . $value . '; vaihda tämä tieto ja kokeile uudelleen.';
+            }
+        } else {
+            $issues[] = 'Kentän ' . $table . '.' . $field . ' uniikkiutta ei pystytty tarkistamaan.';
+        }
+        
+        return $issues;
+    }
   }

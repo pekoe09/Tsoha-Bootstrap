@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+{% if user_logged_in %}
+<h1>Lisää uusi asiakas</h1>
+{% else %}
 <h1>Rekisteröidy asiakkaaksi</h1>
+{% endif %}
 
 {% if errors %}
 <div class="alert alert-danger">

@@ -30,3 +30,14 @@
 .numeric-input {
     text-align: right;
 }
+
+.single-checkbox {
+    float: left;
+    height: 1.5em;
+}
+
+.row-image {
+    height: 1.5em;
+    margin: 0px auto;
+    display: block;
+}

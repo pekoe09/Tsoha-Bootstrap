@@ -4,7 +4,10 @@ class Asiakas extends Kayttaja {
     
     public function __construct($attributes){
         parent::__construct($attributes);
-//        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti', 'validate_salasana');
+        $this->validators = array_merge(
+                $this->validators, 
+                array('validate_sahkoposti')
+            );
     }
     
     public static function all(){
@@ -78,20 +81,29 @@ class Asiakas extends Kayttaja {
             'id' => $this->id
         ));
     }
-//    
-//    public function validate_sukunimi(){
-//        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
-//    }
-//    
-//    public function validate_etunimi(){
-//        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
-//    }
-//    
-//    public function validate_sahkoposti(){
-//        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
-//    }
-//    
-//    public function validate_salasana(){
-//        return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
-//    }
+            
+    public function validate_sahkoposti(){
+        return array_merge(
+                $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false),
+                $this->validate_string_uniqueness($this->sahkoposti, 'asiakas', 'sahkoposti', $this->id)
+            );
+    }
+    
+    public function validate_destroyability(){
+        $issues = array();
+        
+        $statement = "SELECT COUNT(*) AS count FROM varaus WHERE asiakas_id = :asiakas_id";
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('asiakas_id' => $this->id));
+        $row = $query->fetch();
+        if($row){
+            if($row['count'] > 0){
+                $issues[] = 'Asiakasta ' . $this->etunimi . ' ' . $this->sukunimi . ' ei pystytä poistamaan; asiakkaaseen on liitetty varaustietoja.';
+            }
+        } else {
+            $issues[] = 'Asiakkaan ' . $this->etunimi . ' ' . $this->sukunimi . ' poistettavuutta ei pystytty tarkistamaan.';
+        }
+        
+        return $issues;
+    }
 }

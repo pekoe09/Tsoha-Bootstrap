@@ -14,6 +14,16 @@ class TyontekijaController extends BaseController {
         View::make('tyontekija/tyontekija.html', array('tyontekija'=>$tyontekija));
     }
     
+    public static function ownShow($id){
+        self::check_logged_in(array("tyontekija"));
+        $tyontekija = Tyontekija::find($id);
+        $varaukset = Varaus::findForResource($id, 'tyontekija');
+        View::make('tyontekija/omat_tiedot.html', array(
+            'tyontekija' => $tyontekija,
+            'varaukset' => $varaukset
+        ));
+    }
+    
     public static function create(){
         self::check_logged_in(array("johtaja"));
         View::make('tyontekija/tyontekija_lisaa.html');
@@ -29,7 +39,8 @@ class TyontekijaController extends BaseController {
             'on_johtaja' => false,
             'aloitus_pvm' => $params['aloitus_pvm'],
             'lopetus_pvm' => $params['lopetus_pvm'],
-            'salasana' => 'xyz'
+            'salasana' => $params['salasana'],
+            'salasana2' => $params['salasana2']
         );
         
         $tyontekija = new Tyontekija($attributes);
@@ -61,7 +72,8 @@ class TyontekijaController extends BaseController {
             'on_johtaja' => false,
             'aloitus_pvm' => $params['aloitus_pvm'],
             'lopetus_pvm' => $params['lopetus_pvm'],
-            'salasana' => 'xyz'
+            'salasana' => $params['salasana'],
+            'salasana2' => $params['salasana2']
         );
         
         $tyontekija = new Tyontekija($attributes);
@@ -80,8 +92,15 @@ class TyontekijaController extends BaseController {
     public static function destroy($id) {
         self::check_logged_in(array("johtaja"));
         $tyontekija = Tyontekija::find($id);
-        $tyontekija->destroy();        
-        Redirect::to('/tyontekija', 
-                array('message' => 'Asiakas (' . $tyontekija->etunimi . ' ' . $tyontekija->sukunimi . ') poistettu.'));
+        
+        $errors = $tyontekija->validate_destroyability();
+        
+        if(count($errors) > 0){
+            Redirect::to('/tyontekija', array('errors' => $errors));
+        } else {            
+            $tyontekija->destroy();        
+            Redirect::to('/tyontekija', 
+                    array('message' => 'Asiakas (' . $tyontekija->etunimi . ' ' . $tyontekija->sukunimi . ') poistettu.'));
+        }
     }
 }

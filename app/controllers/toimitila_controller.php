@@ -70,8 +70,15 @@ class ToimitilaController extends BaseController{
     public static function destroy($id) {
         self::check_logged_in(array("johtaja"));
         $toimitila = Toimitila::find($id);
-        $toimitila->destroy();        
-        Redirect::to('/toimitila', 
-                array('message' => 'Toimitila (' . $toimitila->nimi . ') poistettu.'));
+        
+        $errors = $toimitila->validate_destroyability();
+        
+        if(count($errors) > 0){
+            Redirect::to('/toimitila', array('errors' => $errors));
+        } else {            
+            $toimitila->destroy();        
+            Redirect::to('/toimitila', 
+                    array('message' => 'Toimitila (' . $toimitila->nimi . ') poistettu.'));
+        }
     }
 }

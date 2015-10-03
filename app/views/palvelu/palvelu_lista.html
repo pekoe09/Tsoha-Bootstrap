@@ -2,6 +2,11 @@
 {% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>Tarjottavat terapiapalvelut</h1>
+
+{% if errors %}
+{{forms.error_div(errors)}}
+{% endif %}
+
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 {% if user_logged_in and user_logged_in.tyyppi == 'johtaja' %}
 <a href="{{base_path}}/palvelu/uusi" class="btn btn-primary" role="button">Lisää palvelu</a>

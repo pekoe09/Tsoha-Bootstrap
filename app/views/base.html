@@ -44,11 +44,12 @@
                 {% if user_logged_in %}                    
                     {% if user_logged_in.tyyppi == 'johtaja' %}
                     <!-- nämä näkyvät vain johtajalle -->
-                    <li><a href="{{base_path}}/tyontekija">Terapeutit</a></li>
+                    <li><a href="{{base_path}}/tyontekija">Henkilöstö</a></li>
                     <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
                     {% endif %}
                     {% if user_logged_in.tyyppi == 'johtaja' or user_logged_in.tyyppi == 'tyontekija' %}
-                    <!-- nämä näkyvät kaikille työntekijöille -->
+                    <!-- nämä näkyvät koko henkilöstölle -->
+                    <li><a href="{{base_path}}/varaus">Varaukset</a></li>
                     <li><a href="{{base_path}}/asiakas">Asiakkaat</a></li>
                     <li><a href="{{base_path}}/tilastot">Tilastot</a></li> 
                     {% endif %}
@@ -58,6 +59,9 @@
                 {% if user_logged_in %}
                     {% if user_logged_in.tyyppi == 'asiakas' %}
                     <li><a href="{{base_path}}/asiakas/{{user_logged_in.id}}/omat_tiedot">Omat tiedot</a></li>
+                    {% endif %}
+                    {% if user_logged_in.tyyppi == 'tyontekija' %}
+                    <li><a href="{{base_path}}/tyontekija/{{user_logged_in.id}}/omat_tiedot">Omat tiedot</a></li>
                     {% endif %}
                 <li><a href="{{base_path}}/kirjaudu_ulos">Kirjaudu ulos</a></li>
                 {% endif %}

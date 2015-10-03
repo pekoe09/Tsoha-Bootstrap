@@ -67,6 +67,10 @@
   $routes->get('/tyontekija/:id', function($id){
       TyontekijaController::show($id);
   });
+  
+  $routes->get('/tyontekija/:id/omat_tiedot', function($id){
+      TyontekijaController::ownShow($id);
+  });
       
   $routes->get('/tyontekija/:id/muokkaa', function($id){
       TyontekijaController::edit($id);

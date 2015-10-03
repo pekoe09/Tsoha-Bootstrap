@@ -6,7 +6,7 @@ class Kayttaja extends BaseModel {
     
     public function __construct($attributes){
         parent::__construct($attributes);
-        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti', 'validate_salasana');
+        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_salasana');
     }
     
     public static function authenticate($sahkoposti, $salasana){
@@ -75,12 +75,8 @@ class Kayttaja extends BaseModel {
         return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
     }
     
-    public function validate_sahkoposti(){
-        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
-    }
-    
     public function validate_salasana(){
-        if($this->salasana !== $this->salasana2)
+        if(strcmp($this->salasana, $this->salasana2) != 0)
             return array('error' => 'Annetut salasanat eivät täsmää!');
         return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
     }

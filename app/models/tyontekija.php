@@ -6,8 +6,10 @@ class Tyontekija extends Kayttaja{
 
     public function __construct($attributes){
         parent::__construct($attributes);
-        $this->validators = array('validate_sukunimi', 'validate_etunimi', 'validate_sahkoposti',
-            'validate_aloitus_pvm', 'validate_lopetus_pvm', 'validate_salasana');
+        $this->validators = array_merge(
+                $this->validators, 
+                array('validate_aloitus_pvm', 'validate_lopetus_pvm', 'validate_sahkoposti')
+            );
     }
     
     public static function all(){
@@ -79,13 +81,13 @@ class Tyontekija extends Kayttaja{
     
     public function save(){
         $statement = 'INSERT INTO tyontekija ("sukunimi", "etunimi", "sahkoposti", "on_johtaja", "aloitus_pvm", "lopetus_pvm", "salasana")'
-                    . 'VALUES (:sukunimi, :etunimi, :sahkoposti, false, :aloitus_pvm, :lopetus_pvm, :salasana) RETURNING id';
+                    . 'VALUES (:sukunimi, :etunimi, :sahkoposti, :on_johtaja, :aloitus_pvm, :lopetus_pvm, :salasana) RETURNING id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(
             'sukunimi' => $this->sukunimi,
             'etunimi' => $this->etunimi,
             'sahkoposti' => $this->sahkoposti,
-//            'on_johtaja' => $this->on_johtaja,
+            'on_johtaja' => isset($this->on_johtaja) ? true : 'f',
             'aloitus_pvm' => date('Y-m-d H:i', strtotime($this->aloitus_pvm)),
             'lopetus_pvm' => $this->lopetus_pvm == null? null : date('Y-m-d', $this->lopetus_pvm),
             'salasana' => $this->salasana            
@@ -96,12 +98,14 @@ class Tyontekija extends Kayttaja{
         
     public function update(){
         $statement = 'UPDATE tyontekija SET "sukunimi" = :sukunimi, "etunimi" = :etunimi, "sahkoposti" = :sahkoposti,'
-                . ' "aloitus_pvm" = :aloitus_pvm, "lopetus_pvm" = :lopetus_pvm, "salasana" = :salasana WHERE "id" = :id';
+                . ' "aloitus_pvm" = :aloitus_pvm, "lopetus_pvm" = :lopetus_pvm, "salasana" = :salasana, "on_johtaja" = :on_johtaja'
+                . ' WHERE "id" = :id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(
             'sukunimi' => $this->sukunimi,
             'etunimi' => $this->etunimi,
             'sahkoposti' => $this->sahkoposti,
+            'on_johtaja' => isset($this->on_johtaja) ? 't' : 'f',
             'aloitus_pvm' => date('Y-m-d H:i', strtotime($this->aloitus_pvm)),
             'lopetus_pvm' => $this->lopetus_pvm == null? null : date('Y-m-d', $this->lopetus_pvm),
             'salasana' => $this->salasana,
@@ -110,28 +114,27 @@ class Tyontekija extends Kayttaja{
     }
     
     public function destroy(){
+        // poistetaan ensin työntekijän ja palvelun liitostiedot ja työntekijän
+        // työpaivätiedot, sitten vasta työntekijä
+        
+        $statement = 'DELETE FROM tyontekija_palvelu WHERE "tyontekija_id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        
+        $statement = 'DELETE FROM tyopaiva WHERE "tyontekija_id" = :id';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        
         $statement = 'DELETE FROM tyontekija WHERE "id" = :id';
-                $query = DB::connection()->prepare($statement);
+        $query = DB::connection()->prepare($statement);
         $query->execute(array(
             'id' => $this->id
         ));
     }
-    
-//    public function validate_sukunimi(){
-//        return $this->validate_string_length('Sukunimi', $this->sukunimi, 1, 100, false);
-//    }
-//    
-//    public function validate_etunimi(){
-//        return $this->validate_string_length('Etunimi', $this->etunimi, 1, 100, false);
-//    }
-//    
-//    public function validate_sahkoposti(){
-//        return $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false);
-//    }
-//    
-//    public function validate_salasana(){
-//        return $this->validate_string_length('Salasana', $this->salasana, 1, 40, false);
-//    }
     
     public function validate_aloitus_pvm(){
         return $this->validate_date('Aloituspvm', $this->aloitus_pvm, null, null, false);
@@ -139,5 +142,30 @@ class Tyontekija extends Kayttaja{
     
     public function validate_lopetus_pvm(){
         return $this->validate_date('Lopetuspvm', $this->lopetus_pvm, null, null, true);
+    }
+                    
+    public function validate_sahkoposti(){
+        return array_merge(
+                $this->validate_string_length('Sähköposti', $this->sahkoposti, 1, 200, false),
+                $this->validate_string_uniqueness($this->sahkoposti, 'tyontekija', 'sahkoposti', $this->id)
+            );
+    }
+        
+    public function validate_destroyability(){
+        $issues = array();
+        
+        $statement = "SELECT COUNT(*) AS count FROM varaus WHERE tyontekija_id = :tyontekija_id";
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('tyontekija_id' => $this->id));
+        $row = $query->fetch();
+        if($row){
+            if($row['count'] > 0){
+                $issues[] = 'Työntekijää ' . $this->etunimi . ' ' . $this->sukunimi . ' ei pystytä poistamaan; työntekijään on liitetty varaustietoja.';
+            }
+        } else {
+            $issues[] = 'Työntekijän ' . $this->etunimi . ' ' . $this->sukunimi . ' poistettavuutta ei pystytty tarkistamaan.';
+        }
+        
+        return $issues;
     }
 }

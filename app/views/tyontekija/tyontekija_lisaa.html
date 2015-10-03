@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää terapeutti</h1>
+<h1>Lisää henkilöstön jäsen</h1>
 
 {% if errors %}
 <div class="alert alert-danger">
@@ -24,6 +24,12 @@
         <label for="etunimi" class='col-sm-2 control-label'>Etunimi</label>
         <div class="col-sm-10">
             <input class="form-control" id="etunimi" name="etunimi" type="text" value="{{tyontekija.etunimi}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="on_johtaja" class='col-sm-2 control-label'>On johtaja</label>
+        <div class="col-sm-offset-2 subform subform-row">
+            <input class="form-control single-checkbox" id="on_johtaja" name="on_johtaja" type="checkbox" value="{{tyontekija.on_johtaja}}">
         </div>
     </div>
     <div class="form-group">
@@ -63,5 +69,6 @@
     </div>
 </form>
 
-<a href="{{base_path}}/tyontekija" class="btn btn-link" role="button">Takaisin terapeuttilistaan</a>
+<a href="{{base_path}}/tyontekija" class="btn btn-link" role="button">Takaisin henkilöstölistaan</a>
+
 {% endblock %}

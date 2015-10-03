@@ -24,7 +24,8 @@ class AsiakasController extends BaseController {
             'sukunimi' => $params['sukunimi'],
             'etunimi' => $params['etunimi'],
             'sahkoposti' => $params['sahkoposti'],
-            'salasana' => $params['salasana']
+            'salasana' => $params['salasana'],
+            'salasana2' => $params['salasana2']
         );
         $asiakas = new Asiakas($attributes);
         $errors = $asiakas->errors();
@@ -72,15 +73,22 @@ class AsiakasController extends BaseController {
     public static function destroy($id) {
         self::check_logged_in(array("tyontekija", "johtaja"));
         $asiakas = Asiakas::find($id);
-        $asiakas->destroy();        
-        Redirect::to('/asiakas', 
-                array('message' => 'Asiakas (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') poistettu.'));
+        
+        $errors = $asiakas->validate_destroyability();
+        
+        if(count($errors) > 0){
+            Redirect::to('/asiakas', array('errors' => $errors));
+        } else {        
+            $asiakas->destroy();        
+            Redirect::to('/asiakas', 
+                    array('message' => 'Asiakas (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') poistettu.'));
+        }
     }    
         
     public static function ownShow($id){
         self::check_logged_in(array("asiakas"));
         $asiakas = Asiakas::find($id);
-        $varaukset = Varaus::findForCustomer($id);
+        $varaukset = Varaus::findForResource($id, 'asiakas');
         View::make('asiakas/omat_tiedot.html', array(
             'asiakas'=>$asiakas,
             'varaukset'=>$varaukset

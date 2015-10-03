@@ -55,29 +55,39 @@ class Varaus extends BaseModel {
         return null;
     }
     
-    public static function findForCustomer($asiakas_id){
+    public static function findForResource($resurssi_id, $resurssi_tyyppi){
         $statement = 'SELECT v.id, v.palvelu_id, p.nimi AS palvelu_nimi,'
-                . ' v.tyontekija_id, t.etunimi, t.sukunimi,'
+                . ' v.tyontekija_id, t.etunimi AS tyontekija_etunimi,'
+                . ' t.sukunimi AS tyontekija_sukunimi,'
+                . ' v.asiakas_id, a.etunimi AS asiakas_etunimi, a.sukunimi AS asiakas_sukunimi,'
                 . ' v.toimitila_id, o.nimi AS toimitila_nimi, o.katuosoite,'
                 . ' v.aloitusaika, v.on_peruutettu'
                 . ' FROM varaus v'
                 . ' INNER JOIN palvelu p ON v.palvelu_id = p.id'
+                . ' INNER JOIN asiakas a ON v.asiakas_id = a.id'
                 . ' INNER JOIN tyontekija t ON v.tyontekija_id = t.id'
-                . ' INNER JOIN toimitila o ON v.toimitila_id = o.id'
-                . ' WHERE asiakas_id = :asiakas_id ORDER BY aloitusaika DESC';
+                . ' INNER JOIN toimitila o ON v.toimitila_id = o.id';
+        if($resurssi_tyyppi == 'asiakas')
+            $statement = $statement . ' WHERE asiakas_id = :resurssi_id ORDER BY aloitusaika DESC';
+        else if($resurssi_tyyppi == 'tyontekija')
+            $statement = $statement . ' WHERE tyontekija_id = :resurssi_id ORDER BY aloitusaika DESC';
+        else if($resurssi_tyyppi == 'toimitila')
+            $statement = $statement . ' WHERE toimitila_id = :resurssi_id ORDER BY aloitusaika DESC';
         $query = DB::connection()->prepare($statement);
-        $query->execute(array('asiakas_id' => $asiakas_id));
+        $query->execute(array('resurssi_id' => $resurssi_id));
         $rows = $query->fetchAll();
         $varaukset = array();
         foreach($rows as $row)
             $varaukset[] = new Asiakasvaraus(array(
                 'id' => $row['id'],
-                'asiakas_id' => $asiakas_id,
                 'palvelu_id' => $row['palvelu_id'],
                 'palvelu_nimi' => $row['palvelu_nimi'],
                 'tyontekija_id' => $row['tyontekija_id'],
-                'etunimi'=> $row['etunimi'],
-                'sukunimi' => $row['sukunimi'],
+                'tyontekija_etunimi'=> $row['tyontekija_etunimi'],
+                'tyontekija_sukunimi' => $row['tyontekija_sukunimi'],
+                'asiakas_id' => $row['asiakas_id'],
+                'asiakas_etunimi'=> $row['asiakas_etunimi'],
+                'asiakas_sukunimi' => $row['asiakas_sukunimi'],
                 'toimitila_id' => $row['toimitila_id'],
                 'toimitila_nimi' => $row['toimitila_nimi'],
                 'katuosoite' => $row['katuosoite'],

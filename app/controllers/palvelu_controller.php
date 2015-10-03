@@ -32,18 +32,27 @@ class PalveluController extends BaseController{
         self::check_logged_in(array("johtaja"));
         $request = file_get_contents('php://input');
         $input = json_decode($request, true);
-        $palvelu = new Palvelu(array(
+        $attributes = array(
             'nimi' => $input['nimi'],
             'kesto' => $input['kesto'],
             'kuvaus' => $input['kuvaus']
-        ));
-        $tsekki = 'ei mitään';
-        if ($input)
-            $tsekki = 'jotain'; else $tsekki = 'tyhjä';
+        );
+        $palvelu = new Palvelu($attributes);
+        $errors = $palvelu->errors();
         
-        $palvelu->save();
+        if(count($errors) > 0){
+            View::make('palvelu/palvelu_lisaa.html',
+                    array('errors' => $errors, 'palvelu' => $palvelu));
+        } else {
+            // tallennetaan ensin palvelu, sitten sen liitännäistiedot
+            $palvelu->save();      
+            if($palvelu->id != null){
+                $palvelu->saveOffices($input['soveltuvat_toimitilat']);
+                $palvelu->saveTherapists($input['tarjoavat_tyontekijat']);
+            }
         
-        Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+            Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+        }
     }    
     
     public static function edit($id) {
@@ -56,21 +65,25 @@ class PalveluController extends BaseController{
         self::check_logged_in(array("johtaja"));
         $request = file_get_contents('php://input');
         $input = json_decode($request, true);
-        $palvelu = new Palvelu(array(
+        $attributes = array(
             'id' => $id,
             'nimi' => $input['nimi'],
             'kesto' => $input['kesto'],
             'kuvaus' => $input['kuvaus']
-        ));
+        );
         
-        $errors = array();
-//        $errors = $palvelu->errors();
+        $palvelu = new Palvelu($attributes);        
+        $errors = $palvelu->errors();
         
         if(count($errors) > 0){
             View::make('palvelu/palvelu_muokkaa.html', 
                     array('errors' => $errors, 'palvelu' => $palvelu));
         } else {
+            // tallennetaan ensin palvelu, sitten sen liitännäistiedot
             $palvelu->update();
+            $palvelu->saveOffices($input['soveltuvat_toimitilat']);
+            $palvelu->saveTherapists($input['tarjoavat_tyontekijat']);
+            
             Redirect::to('/palvelu', array('message' => 
                 'Palvelun (' . $palvelu->nimi . ') tiedot päivitetty!'));
         }
@@ -79,8 +92,15 @@ class PalveluController extends BaseController{
     public static function destroy($id) {
         self::check_logged_in(array("johtaja"));
         $palvelu = Palvelu::find($id);
-        $palvelu->destroy();        
-        Redirect::to('/palvelu', 
-                array('message' => 'Palvelu (' . $palvelu->nimi . ') poistettu.'));
+        
+        $errors = $palvelu->validate_destroyability();
+        
+        if(count($errors) > 0){
+            Redirect::to('/palvelu', array('errors' => $errors));
+        } else {  
+            $palvelu->destroy();        
+            Redirect::to('/palvelu', 
+                    array('message' => 'Palvelu (' . $palvelu->nimi . ') poistettu.'));
+        }
     }
 }

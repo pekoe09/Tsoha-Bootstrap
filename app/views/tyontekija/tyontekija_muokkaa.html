@@ -27,12 +27,34 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="on_johtaja" class='col-sm-2 control-label'>On johtaja</label>
+        <div class="col-sm-offset-2 subform subform-row">
+            {% if tyontekija.on_johtaja %}
+            <input class="form-control single-checkbox" id="on_johtaja" name="on_johtaja" type="checkbox" value="on_johtaja" checked>
+            {% else %}
+            <input class="form-control single-checkbox" id="on_johtaja" name="on_johtaja" type="checkbox" value="on_johtaja">
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group">
         <label for="sahkoposti" class='col-sm-2 control-label'>Sähköposti</label>
         <div class="col-sm-10">
             <input class="form-control" id="sahkoposti" name="sahkoposti" type="text" value="{{tyontekija.sahkoposti}}">
         </div>
     </div>
-        <div class="form-group">
+    <div class="form-group">
+        <label for="salasana" class='col-sm-2 control-label'>Salasana</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="salasana" name="salasana" type="password">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="salasana2" class='col-sm-2 control-label'>Salasana uudelleen</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="salasana2" name="salasana2" type="password">
+        </div>
+    </div>
+    <div class="form-group">
         <label for="aloitus_pvm" class='col-sm-2 control-label'>Aloittanut</label>
         <div class="col-sm-10">
             <input class="form-control" id="aloitus_pvm" name="aloitus_pvm" type="date" value="{{tyontekija.aloitus_pvm}}">
@@ -51,5 +73,6 @@
     </div>
 </form>
 
-<a href="{{base_path}}/tyontekija" class="btn btn-link" role="button">Takaisin terapeuttilistaan</a>
+<a href="{{base_path}}/tyontekija" class="btn btn-link" role="button">Takaisin henkilöstölistaan</a>
+
 {% endblock %}

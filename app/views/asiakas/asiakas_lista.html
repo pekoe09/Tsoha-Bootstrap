@@ -2,6 +2,11 @@
 {% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>Asiakkaat</h1>
+
+{% if errors %}
+{{forms.error_div(errors)}}
+{% endif %}
+
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <a href="{{base_path}}/asiakas/uusi" class="btn btn-primary" role="button">Lisää asiakas</a>
 <table class="table">
