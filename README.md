@@ -45,7 +45,7 @@ Käyttäjän sisäänkirjautuminen sekä uloskirjautuminen on toteutettu. Sisä�
 * asiakas: mkuovi@this.com / abc
 * tyontekijä: totte.toka@vallila.fi / xxx
 * johtaja: taina.tarkka@vallila.fi / xxx
-* 
+
 ## Päivitykset viikolla 5
 
 Kontrollereihin on lisätty metodien yhteyteen tarkistukset sisäänkirjautuneisuudesta; tarkistuksessa huomioidaan myös, onko käyttäjä asiakas, työntekijä vai johtaja. Uloskirjautumistoiminnallisuus toteutettiin jo edellisellä viikolla.
