@@ -43,12 +43,17 @@
 
         
         // lähetä tallennettavat tiedot kontrollerille json-muodossa POST-metodilla
-        alert(JSON.stringify(saveData));
+//        alert(JSON.stringify(saveData));
 //        $.post("http://jpkangas.users.cs.helsinki.fi/vallila/palvelu", JSON.stringify(saveData), function(){});
+        // ajax-pyynnön url riippuu siitä, onko kyseessä uuden palvelun tallennus vai
+        // olemassa olevan palvelun muutos
+        var url = "http://jpkangas.users.cs.helsinki.fi/vallila/palvelu";
+        if(document.getElementById('palvelu_id'))
+            url = url + "/" + document.getElementById('palvelu_id').val() + "/muokkaa";
 
         $.ajax({
            type: "POST",
-           url: "http://jpkangas.users.cs.helsinki.fi/vallila/palvelu",
+           url: url,
 //           url: "{{base_path}}/palvelu",
            data: JSON.stringify(saveData),
            contentType: "application/json; charset=UTF-8",

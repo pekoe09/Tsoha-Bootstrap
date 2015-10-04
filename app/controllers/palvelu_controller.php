@@ -45,7 +45,7 @@ class PalveluController extends BaseController{
                     array('errors' => $errors, 'palvelu' => $palvelu));
         } else {
             // tallennetaan ensin palvelu, sitten sen liitännäistiedot
-            $palvelu->save();      
+            $palvelu->save();   
             if($palvelu->id != null){
                 $palvelu->saveOffices($input['soveltuvat_toimitilat']);
                 $palvelu->saveTherapists($input['tarjoavat_tyontekijat']);
@@ -58,7 +58,13 @@ class PalveluController extends BaseController{
     public static function edit($id) {
         self::check_logged_in(array("johtaja"));
         $palvelu = Palvelu::find($id);
-        View::make('palvelu/palvelu_muokkaa.html', array('palvelu' => $palvelu));
+        $toimitilat = Toimitila::all();
+        $tyontekijat =  Tyontekija::all();
+        View::make('palvelu/palvelu_muokkaa.html', array(
+            'palvelu' => $palvelu,
+            'toimitilat' => $toimitilat,
+            'tyontekijat' => $tyontekijat
+            ));
     }
     
     public static function update($id) {
@@ -79,7 +85,7 @@ class PalveluController extends BaseController{
             View::make('palvelu/palvelu_muokkaa.html', 
                     array('errors' => $errors, 'palvelu' => $palvelu));
         } else {
-            // tallennetaan ensin palvelu, sitten sen liitännäistiedot
+            // tallennetaan ensin palvelu, sitten sen liitännäistiedot            
             $palvelu->update();
             $palvelu->saveOffices($input['soveltuvat_toimitilat']);
             $palvelu->saveTherapists($input['tarjoavat_tyontekijat']);
