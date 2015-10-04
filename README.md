@@ -45,3 +45,9 @@ Käyttäjän sisäänkirjautuminen sekä uloskirjautuminen on toteutettu. Sisä�
 * asiakas: mkuovi@this.com / abc
 * tyontekijä: totte.toka@vallila.fi / xxx
 * johtaja: taina.tarkka@vallila.fi / xxx
+* 
+## Päivitykset viikolla 5
+
+Kontrollereihin on lisätty metodien yhteyteen tarkistukset sisäänkirjautuneisuudesta; tarkistuksessa huomioidaan myös, onko käyttäjä asiakas, työntekijä vai johtaja. Uloskirjautumistoiminnallisuus toteutettiin jo edellisellä viikolla.
+
+Palveluun liittyvien toimipaikkojen ja työntekijöiden tallennus palvelun tallennuksen yhteydessä toteutettu; lisätty myös palvelun tietojen muokkausnäkymä. Palvelun tallennuksen ja muokkauksen yhteydessä oleva näkymän päivittymisongelma on kuitenkin edelleen korjaamatta (kts kommentti viikkoa 4 koskevan osion alussa). Korjattu edelleen bugeja. Dokumentaatioon on lisätty kaavio käyttöliittymäkomponenteista sekä järjestelmän yleisrakennekuvaus.
