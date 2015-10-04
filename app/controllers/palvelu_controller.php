@@ -58,8 +58,8 @@ class PalveluController extends BaseController{
     public static function edit($id) {
         self::check_logged_in(array("johtaja"));
         $palvelu = Palvelu::find($id);
-        $toimitilat = Toimitila::all();
-        $tyontekijat =  Tyontekija::all();
+        $toimitilat = Toimitila::allWithService($id);
+        $tyontekijat =  Tyontekija::allWithService($id);
         View::make('palvelu/palvelu_muokkaa.html', array(
             'palvelu' => $palvelu,
             'toimitilat' => $toimitilat,

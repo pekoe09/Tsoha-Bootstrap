@@ -32,6 +32,34 @@ class Tyontekija extends Kayttaja{
         return $tyontekijat;
     }
     
+    public static function allWithService($palvelu_id){
+        $statement = 'SELECT t.id, t.etunimi, t.sukunimi, t.sahkoposti,'
+                . ' t.on_johtaja, t.aloitus_pvm, t.lopetus_pvm, '
+                . ' (SELECT tp.hinta FROM tyontekija_palvelu tp'
+                . ' WHERE tp.palvelu_id = :palvelu_id AND tp.tyontekija_id = t.id) AS hinta'
+                . ' FROM tyontekija t'
+                . ' ORDER BY t.sukunimi, t.etunimi';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('palvelu_id' => $palvelu_id));
+        $rows = $query->fetchAll();
+        $tyontekijat = array();
+        foreach($rows as $row){
+            $tyontekijat[] = array(
+                new Tyontekija(array(
+                'id' => $row['id'],
+                'etunimi' => $row['etunimi'],
+                'sukunimi' => $row['sukunimi'],
+                'sahkoposti' => $row['sahkoposti'],
+                'on_johtaja' => $row['on_johtaja'],
+                'aloitus_pvm' => $row['aloitus_pvm'],
+                'lopetus_pvm' => $row['lopetus_pvm']
+                )), 
+                $row['hinta']
+            );
+        }
+        return $tyontekijat;  
+    }
+    
     public static function find($id){
         $statement = 'SELECT * FROM tyontekija WHERE id = :id LIMIT 1';
         $query = DB::connection()->prepare($statement);

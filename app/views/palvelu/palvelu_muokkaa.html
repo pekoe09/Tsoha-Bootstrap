@@ -40,8 +40,8 @@
                 <tbody>
                     {% for toimitila in toimitilat %}
                     <tr class="soveltuva_toimitila subform-row">
-                        <td class="subform-row-header-col">{{toimitila.nimi}}</td>
-                        <td><input type="checkbox" class="toimitila_id" value="{{toimitila.id}}"></td>
+                        <td class="subform-row-header-col">{{toimitila[0].nimi}}</td>
+                        <td><input type="checkbox" class="toimitila_id" value="{{toimitila[0].id}}" {% if toimitila[1] %}checked{% endif %}></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -61,8 +61,8 @@
                 <tbody>
                     {% for tyontekija in tyontekijat %}
                     <tr class="tarjoava_tyontekija subform-row">
-                        <td class="subform-row-header-col">{{ tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi }}</td>
-                        <td class="tyontekija_hinta" data-tyontekija-id='{{tyontekija.id}}'><input type='text' class="numeric-input tyontekija_hinta"></td>
+                        <td class="subform-row-header-col">{{ tyontekija[0].etunimi ~ ' ' ~ tyontekija[0].sukunimi }}</td>
+                        <td class="tyontekija_hinta" data-tyontekija-id='{{tyontekija[0].id}}'><input type='text' class="numeric-input tyontekija_hinta" value="{{tyontekija[1]}}"></td>
                     </tr>
                     {% endfor %}
                 </tbody>

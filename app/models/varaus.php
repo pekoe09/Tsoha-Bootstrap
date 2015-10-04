@@ -73,8 +73,13 @@ class Varaus extends BaseModel {
             $statement = $statement . ' WHERE tyontekija_id = :resurssi_id ORDER BY aloitusaika DESC';
         else if($resurssi_tyyppi == 'toimitila')
             $statement = $statement . ' WHERE toimitila_id = :resurssi_id ORDER BY aloitusaika DESC';
+        else
+            $statement = $statement . ' ORDER BY aloitusaika DESC';
         $query = DB::connection()->prepare($statement);
-        $query->execute(array('resurssi_id' => $resurssi_id));
+        if($resurssi_id != null)
+            $query->execute(array('resurssi_id' => $resurssi_id));
+        else
+            $query->execute();
         $rows = $query->fetchAll();
         $varaukset = array();
         foreach($rows as $row)

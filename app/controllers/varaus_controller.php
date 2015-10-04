@@ -4,7 +4,7 @@ class VarausController extends BaseController {
     
     public static function index(){
         self::check_logged_in(array("tyontekija", "johtaja"));
-        $varaukset = Varaus::all();
+        $varaukset = Varaus::findForResource(null, null);
         View::make('varaus/varaus_lista.html', array('varaukset'=>$varaukset));
     }
     

@@ -2,56 +2,40 @@
 {% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>Varaukset</h1>
-<button type="button" class="btn btn-primary">Lisää terapeutti</button>
+
+{% if errors %}
+{{forms.error_div(errors)}}
+{% endif %}
+
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+{% if user_logged_in and (user_logged_in.tyyppi == 'johtaja' or user_logged_in.tyyppi == 'tyontekija') %}
+<a href="{{base_path}}/varaus/uusi" class="btn btn-primary" role="button">Tee varaus</a>
+{% endif %}
+
 <table class="table">
     <thead>
         <tr>
-            <td>Sukunimi</td>
-            <td>Etunimi</td>
-            <td>Sähköposti</td>
-            <td>Aloittanut</td>
-            <td>Lopettanut</td>
-            <td></td>
+            <td>Ajankohta</td>
+            <td>Terapia</td>
+            <td>Asiakas</td>
+            <td>Terapeutti</td>
+            <td>Toimipaikka</td>
+            <td>Peruutettu</td>
             <td></td>
         </tr>
     </thead>
     <tbody>
+        {% for varaus in varaukset %}
         <tr>
-            <td>Joku</td>
-            <td>Arska</td>
-            <td>arska.joku@vallila.fi</td> 
-            <td>1.12.2008</td>
-            <td>2.12.2008</td>
-            <td><button type="button" class="btn btn-primary">Muuta</button></td>
-            <td><button type="button" class="btn btn-danger">Poista</button></td>
+            <td>{{varaus.aloitusaika}}</td>
+            <td>{{varaus.palvelu_nimi}}</td>
+            <td>{{varaus.asiakas_etunimi ~ ' ' ~ varaus.asiakas_sukunimi }}</td>
+            <td>{{varaus.tyontekija_etunimi ~ ' ' ~ varaus.tyontekija_sukunimi}}</td>
+            <td>{{varaus.toimitila_nimi}}</td>   
+            <td>{{varaus.on_peruutettu}}</td>  
+            <td>{{forms.destroy_button("#{base_path}/varaus/#{varaus.id}/poista")}}</td>
         </tr>
-        <tr>
-            <td>Kolmonen</td>
-            <td>Keijo</td>
-            <td>keijo.kolmonen@vallila.fi</td> 
-            <td>1.3.2011</td>
-            <td></td>
-            <td><button type="button" class="btn btn-primary">Muuta</button></td>
-            <td><button type="button" class="btn btn-danger">Poista</button></td>
-        </tr>
-        <tr>
-            <td>Testaaja</td>
-            <td>Terttu</td>
-            <td>terttu.testaaja@vallila.fi</td> 
-            <td>20.7.1997</td>
-            <td></td>
-            <td><button type="button" class="btn btn-primary">Muuta</button></td>
-            <td><button type="button" class="btn btn-danger">Poista</button></td>
-        </tr>
-        <tr>
-            <td>Toka</td>
-            <td>Totte</td>
-            <td>totte.toka@vallila.fi</td> 
-            <td>31.3.2003</td>
-            <td>2.12.2008</td>
-            <td><button type="button" class="btn btn-primary">Muuta</button></td>
-            <td><button type="button" class="btn btn-danger">Poista</button></td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 
