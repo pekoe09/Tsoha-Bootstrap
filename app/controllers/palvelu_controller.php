@@ -50,8 +50,16 @@ class PalveluController extends BaseController{
                 $palvelu->saveOffices($input['soveltuvat_toimitilat']);
                 $palvelu->saveTherapists($input['tarjoavat_tyontekijat']);
             }
-        
-            Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+            
+            // näkymän ajax-kutsulle palautetaan uudelleenohjausosoite, jotta se voi hoitaa ohjauksen
+            $redirection = json_encode(array(
+                'redirect' => urlencode($palvelu->id), 
+                array('message' => 'Palvelu tallennettu')
+                ));
+            echo '[' . $redirection . ']';
+            
+            //Redirect::to('/palvelu', array('message' => 'Palvelu tallennettu.'));
+//            Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
         }
     }    
     
@@ -90,8 +98,15 @@ class PalveluController extends BaseController{
             $palvelu->saveOffices($input['soveltuvat_toimitilat']);
             $palvelu->saveTherapists($input['tarjoavat_tyontekijat']);
             
-            Redirect::to('/palvelu', array('message' => 
-                'Palvelun (' . $palvelu->nimi . ') tiedot päivitetty!'));
+            // näkymän ajax-kutsulle palautetaan uudelleenohjausosoite, jotta se voi hoitaa ohjauksen
+            $redirection = json_encode(array(
+                'redirect' => urlencode($palvelu->id), 
+                array('message' => 'Palvelu tallennettu')
+                ));
+            echo '[' . $redirection . ']';
+            
+//            Redirect::to('/palvelu', array('message' => 
+//                'Palvelun (' . $palvelu->nimi . ') tiedot päivitetty!'));
         }
     }
     

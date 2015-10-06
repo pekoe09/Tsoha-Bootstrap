@@ -1,16 +1,12 @@
-//$(document).ready(function(){   
-//
-//    $("form").submit()(function(e){
-//        alert("submit-event huudettu")
-//        e.preventDefault();
-//        saveChanges();
-//    });
+$(document).ready(function(){   
+
+    $("form").submit(function(e){
+        e.preventDefault();
+        saveChanges();
+    });
     
     function saveChanges(){       
-//        alert('saveChanges huudettu');
-        //var message = 'arvot: (nimi = '.concat($('#nimi').val(), ' kesto = ', $('#kesto').val(), 'kuvaus = ', $('#kuvaus').val(), ')');
-        //alert(message);
-        // käy läpi soveltuva_toimitila -rivit toimitilataulukosta ja poimi valitut
+        // käy läpi soveltuva_toimitila -rivit toimitilataulukosta ja poimi valitut        
         var palveluToimitilat = [];
         $('.soveltuva_toimitila').each(function(){
             if($(this).find("input.toimitila_id").prop('checked')){
@@ -40,11 +36,8 @@
             soveltuvat_toimitilat: palveluToimitilat,
             tarjoavat_tyontekijat: palveluTyontekijat
         };
-
         
-        // lähetä tallennettavat tiedot kontrollerille json-muodossa POST-metodilla
-//        alert(JSON.stringify(saveData));
-//        $.post("http://jpkangas.users.cs.helsinki.fi/vallila/palvelu", JSON.stringify(saveData), function(){});
+        // lähetä tallennettavat tiedot kontrollerille json-muodossa POST-metodilla;
         // ajax-pyynnön url riippuu siitä, onko kyseessä uuden palvelun tallennus vai
         // olemassa olevan palvelun muutos
         var url = "http://jpkangas.users.cs.helsinki.fi/vallila/palvelu";
@@ -54,12 +47,15 @@
         $.ajax({
            type: "POST",
            url: url,
-//           url: "{{base_path}}/palvelu",
            data: JSON.stringify(saveData),
            contentType: "application/json; charset=UTF-8",
-           dataType: "json"           
+           dataType: "json",
+           success: function(result){
+               //alert(result[0].redirect);
+               window.location = result[0].redirect;
+           }
         });
         
-        return false;
+//        return false;
     }
-//});
+});

@@ -60,7 +60,7 @@ class Palvelu extends BaseModel {
     public function saveOffices($soveltuvat_toimitilat){
         // pyyhitään ensin aiemmat toimitilaliitokset pois, sitten tallennetaan
         // kaikki puhtaalta pöydältä
-        destroy_toimitila_connections();
+        $this->destroy_toimitila_connections();
         foreach($soveltuvat_toimitilat as $toimitila){
             $statement = 'INSERT INTO toimitila_palvelu ("toimitila_id", "palvelu_id")'
                     . ' VALUES (:toimitila_id, :palvelu_id)';
@@ -75,7 +75,7 @@ class Palvelu extends BaseModel {
     public function saveTherapists($tarjoavat_tyontekijat){
         // pyyhitään ensin aiemmat tyontekijäliitokset pois, sitten tallennetaan
         // kaikki puhtaalta pöydältä       
-        destroy_tyontekija_connections();
+        $this->destroy_tyontekija_connections();
         foreach($tarjoavat_tyontekijat as $tyontekija){
             $statement = 'INSERT INTO tyontekija_palvelu ("tyontekija_id", "palvelu_id", "hinta")'
                     . ' VALUES (:tyontekija_id, :palvelu_id, :hinta)';
@@ -104,8 +104,8 @@ class Palvelu extends BaseModel {
         // poistetaan ensin palvelun liitostiedot työntekijöihin sekä toimitiloihin,
         // sitten vasta itse palvelu
         
-        destroy_toimitila_connections();
-        destroy_tyontekija_connections();
+        $this->destroy_toimitila_connections();
+        $this->destroy_tyontekija_connections();
         
         $statement = 'DELETE FROM palvelu WHERE "id" = :id';
         $query = DB::connection()->prepare($statement);
@@ -114,7 +114,7 @@ class Palvelu extends BaseModel {
         ));
     }
     
-    private function destroy_toimitila_connections(){
+    public function destroy_toimitila_connections(){
         $statement = 'DELETE FROM toimitila_palvelu WHERE "palvelu_id" = :id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(
@@ -122,7 +122,7 @@ class Palvelu extends BaseModel {
         ));
     }
     
-    private function destroy_tyontekija_connections(){
+    public function destroy_tyontekija_connections(){
         $statement = 'DELETE FROM tyontekija_palvelu WHERE "palvelu_id" = :id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(

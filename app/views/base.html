@@ -75,13 +75,14 @@
     </nav>
 
     <div id="main-container">
+      <script src="{{base_path}}/vendor/jquery.min.js"></script>
       <!-- Dynaaminen sisältö tulee tähän -->
       {% block content %}{% endblock %}
     </div>
 
     {% block body %}
       <!-- jQuery -->
-      <script src="{{base_path}}/vendor/jquery.min.js"></script>
+      <!-- <script src="{{base_path}}/vendor/jquery.min.js"></script> -->
 
       <!-- Bootstrap (skriptitiedosto) -->
       <script src="{{base_path}}/vendor/bootstrap/js/bootstrap.min.js"></script>

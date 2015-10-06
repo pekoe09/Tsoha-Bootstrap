@@ -62,7 +62,7 @@
                     {% for tyontekija in tyontekijat %}
                     <tr class="tarjoava_tyontekija subform-row">
                         <td class="subform-row-header-col">{{ tyontekija[0].etunimi ~ ' ' ~ tyontekija[0].sukunimi }}</td>
-                        <td class="tyontekija_hinta" data-tyontekija-id='{{tyontekija[0].id}}'><input type='text' class="numeric-input tyontekija_hinta" value="{{tyontekija[1]}}"></td>
+                        <td class="tyontekija_hinta" data-tyontekija-id='{{tyontekija[0].id}}'><input type='text' class="numeric-input tyontekija_hinta" {% if tyontekija[1] > 0 %}value="{{tyontekija[1]}}"{% endif %}></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -72,7 +72,8 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             
-            <button class="btn btn-primary" onClick="javascript: return saveChanges()">Tallenna</button>
+            <!-- <button class="btn btn-primary" onClick="javascript: return saveChanges()">Tallenna</button> -->
+            <button type='submit' class='btn btn-primary'>Tallenna</button>
         </div>
     </div>
 </form>
