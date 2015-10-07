@@ -35,8 +35,14 @@ class AsiakasController extends BaseController {
                     array('errors' => $errors, 'asiakas' => $asiakas));
         } else {
             $asiakas->save();  
-            
-            Redirect::to('/', array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));
+            if(!isset($_SESSION['user'])){
+                $kayttaja = Kayttaja::authenticate($attributes['sahkoposti'], $attributes['salasana']);
+                if($kayttaja != null){
+                    $_SESSION['user'] = $kayttaja->id;
+                    $_SESSION['tyyppi'] = $kayttaja->tyyppi;
+                }
+            }
+            Redirect::to('/', array('message' => 'Tiedot tallennettu - tervetuloa asiakkaaksi!'));            
         }
     }
     
@@ -47,26 +53,39 @@ class AsiakasController extends BaseController {
     }
     
     public static function update($id) {
-        self::check_logged_in(array("tyontekija", "johtaja"));
+        self::check_logged_in(array("asiakas", "tyontekija", "johtaja"));
         $params = $_POST;
         $attributes = array(
             'id' => $id,
             'sukunimi' => $params['sukunimi'],
             'etunimi' => $params['etunimi'],
             'sahkoposti' => $params['sahkoposti'],
-            'salasana' => $params['salasana']
+            'salasana' => $params['salasana'],
+            'salasana2' => $params['salasana2']
         );
         
         $asiakas = new Asiakas($attributes);
         $errors = $asiakas->errors();
         
-        if(count($errors) > 0){
-            View::make('asiakas/asiakas_muokkaa.html', 
-                    array('errors' => $errors, 'asiakas' => $asiakas));
-        } else {
-            $asiakas->update();
-            Redirect::to('/asiakas', array('message' => 
-                'Asiakkaan (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') tiedot päivitetty!'));
+        if(strcasecmp($_SESSION['tyyppi'], "asiakas") == 0){
+            if(count($errors) > 0){
+                View::make('asiakas/' .$id . 'omat_tiedot.html', 
+                        array('errors' => $errors, 'asiakas' => $asiakas));
+            } else {
+                $asiakas->update();
+                Redirect::to('/asiakas/' . $id . '/omat_tiedot', array('message' => 
+                    'Tietosi on päivitetty!'));
+            }
+        }
+        else{
+            if(count($errors) > 0){
+                View::make('asiakas/asiakas_muokkaa.html', 
+                        array('errors' => $errors, 'asiakas' => $asiakas));
+            } else {
+                $asiakas->update();
+                Redirect::to('/asiakas', array('message' => 
+                    'Asiakkaan (' . $asiakas->etunimi . ' ' . $asiakas->sukunimi . ') tiedot päivitetty!'));
+            }
         }
     }
     
@@ -93,29 +112,5 @@ class AsiakasController extends BaseController {
             'asiakas'=>$asiakas,
             'varaukset'=>$varaukset
             ));
-    }
-    
-    public static function ownUpdate($id){
-        self::check_logged_in(array("asiakas"));
-        $params = $_POST;
-        $attributes = array(
-            'id' => $id,
-            'sukunimi' => $params['sukunimi'],
-            'etunimi' => $params['etunimi'],
-            'sahkoposti' => $params['sahkoposti'],
-            'salasana' => $params['salasana']
-        );
-        
-        $asiakas = new Asiakas($attributes);
-        $errors = $asiakas->errors();
-        
-        if(count($errors) > 0){
-            View::make('asiakas/' .$id . 'omat_tiedot.html', 
-                    array('errors' => $errors, 'asiakas' => $asiakas));
-        } else {
-            $asiakas->update();
-            Redirect::to('/asiakas/' . $id . '/omat_tiedot', array('message' => 
-                'Tietosi on päivitetty!'));
-        }
     }
 }

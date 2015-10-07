@@ -10,7 +10,8 @@ class Palvelu extends BaseModel {
     }
     
     public static function all(){
-        $statement = 'SELECT * FROM palvelu';
+        $statement = 'SELECT * FROM palvelu'
+                . ' ORDER BY nimi';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();

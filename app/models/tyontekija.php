@@ -13,7 +13,8 @@ class Tyontekija extends Kayttaja{
     }
     
     public static function all(){
-        $statement = 'SELECT * FROM tyontekija';
+        $statement = 'SELECT * FROM tyontekija'
+                . ' ORDER BY sukunimi, etunimi';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();

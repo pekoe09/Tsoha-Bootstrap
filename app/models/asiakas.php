@@ -11,7 +11,8 @@ class Asiakas extends Kayttaja {
     }
     
     public static function all(){
-        $statement = 'SELECT * FROM asiakas';
+        $statement = 'SELECT * FROM asiakas'
+                . ' ORDER BY sukunimi, etunimi';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();

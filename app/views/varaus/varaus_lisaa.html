@@ -1,6 +1,14 @@
 {% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
 {% block content %}
 <h1>Uusi varaus</h1>
+
+{% if errors %}
+{{forms.error_div(errors)}}
+{% endif %}
+
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+
 <form method="post" action="{{base_path}}/varaus" class="form-horizontal">
     {% if user_logged_in.tyyppi == 'asiakas' %}
     <input type='hidden' name='asiakas_id' id='asiakas_id' value='{{user_logged_in.id}}'>
@@ -10,7 +18,7 @@
         <div class="col-sm-10">
             <select class="form-control" id="asiakas_id" name="asiakas_id">
                 {% for asiakas in asiakkaat %}
-                <option value="{{asiakas.id}}">{{asiakas.sukunimi ~ ', ' ~ asiakas.etunimi}}</option>
+                <option value="{{asiakas.id}}" {% if varaus != null and varaus.asiakas_id == asiakas.id %}selected{% endif %}>{{asiakas.sukunimi ~ ', ' ~ asiakas.etunimi}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -21,7 +29,7 @@
         <div class="col-sm-10">
             <select class="form-control" id="palvelu_id" name="palvelu_id">
                 {% for palvelu in palvelut %}
-                <option value="{{palvelu.id}}">{{palvelu.nimi}}</option>
+                <option value="{{palvelu.id}}" {% if varaus != null and varaus.palvelu_id == palvelu.id %}selected{% endif %}>{{palvelu.nimi}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -31,7 +39,7 @@
         <div class="col-sm-10">
             <select class="form-control" id="tyontekija_id" name="tyontekija_id">
                 {% for tyontekija in tyontekijat %}
-                <option value="{{tyontekija.id}}">{{tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi}}</option>                
+                <option value="{{tyontekija.id}}" {% if varaus !=null and varaus.tyontekija_id == tyontekija.id %}selected{% endif %}>{{tyontekija.etunimi ~ ' ' ~ tyontekija.sukunimi}}</option>                
                 {% endfor %}
             </select>
         </div>
@@ -41,7 +49,7 @@
         <div class='col-sm-10'>
             <select class="form-control" id="toimitila_id" name="toimitila_id">
                 {% for toimitila in toimitilat %}
-                <option value="{{toimitila.id}}">{{toimitila.nimi}}</option>
+                <option value="{{toimitila.id}}" {% if varaus != null and varaus.toimitila_id == toimitila.id %}selected{% endif %}>{{toimitila.nimi}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -49,13 +57,13 @@
     <div class="form-group">
         <label for="paiva" class='col-sm-2 control-label'>Päivä</label>
         <div class="col-sm-10">
-            <input class="form-control" type="date" id="paiva" name="paiva">
+            <input class="form-control" type="date" id="paiva" name="paiva" {% if varaus != null %}value="{{varaus.aloitusaika}}"{% else %}value="{{"now"|date("Y-m-d")}}"{% endif %}>
         </div>
     </div>
     <div class="form-group">
         <label for="kellonaika" class='col-sm-2 control-label'>Kellonaika</label>
         <div class="col-sm-10">
-            <input class="form-control" type="time" id="kellonaika" name="kellonaika">
+            <input class="form-control" type="time" id="kellonaika" name="kellonaika" {% if varaus != null %}value="{{varaus.aloitusaika}}"{% else %}value="{{"now"|date("H:m")}}"{% endif %}>
         </div>
     </div>
     <div class="form-group">

@@ -139,10 +139,6 @@
   $routes->get('/asiakas/:id/omat_tiedot', function($id){
       AsiakasController::ownShow($id);
   });
-      
-  $routes->post('/asiakas/:id/omat_tiedot', function($id){
-      AsiakasController::ownUpdate($id);
-  });
   
   $routes->get('/varaus', function(){
       VarausController::index();

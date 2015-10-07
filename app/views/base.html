@@ -41,11 +41,11 @@
                 <!-- Navigaation linkit -->
                 <li><a href="{{base_path}}/varaus/uusi">Varaa aika</a></li>
                 <li><a href="{{base_path}}/palvelu">Palvelut</a></li>
+                <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
                 {% if user_logged_in %}                    
                     {% if user_logged_in.tyyppi == 'johtaja' %}
                     <!-- nämä näkyvät vain johtajalle -->
-                    <li><a href="{{base_path}}/tyontekija">Henkilöstö</a></li>
-                    <li><a href="{{base_path}}/toimitila">Toimitilat</a></li>
+                    <li><a href="{{base_path}}/tyontekija">Henkilöstö</a></li>                    
                     {% endif %}
                     {% if user_logged_in.tyyppi == 'johtaja' or user_logged_in.tyyppi == 'tyontekija' %}
                     <!-- nämä näkyvät koko henkilöstölle -->

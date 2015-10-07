@@ -10,7 +10,8 @@ class Toimitila extends BaseModel {
     }
     
     public static function all(){
-        $statement = 'SELECT * FROM toimitila';
+        $statement = 'SELECT * FROM toimitila'
+                . ' ORDER BY nimi';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();

@@ -51,12 +51,23 @@ class VarausController extends BaseController {
         
         // tarkistetaan resurssien ja asiakkaan saatavuus varausajalle 
         if(count($errors) == 0){
-            $errors = array_merge($errors, $varaus->check_overlaps());
+            $errors = $varaus->check_overlaps();
         }
         
         if(count($errors) > 0){
-            View::make('varaus/varaus_lisaa.html',
-                    array('errors' => $errors, 'varaus' => $varaus));
+            $tyontekijat = Tyontekija::all();
+            $palvelut = Palvelu::all();
+            $toimitilat = Toimitila::all();
+            $asiakkaat = Asiakas::all();
+            View::make('varaus/varaus_lisaa.html', 
+                    array(
+                        'errors' => $errors, 
+                        'varaus' => $varaus,
+                        'tyontekijat' => $tyontekijat,
+                        'palvelut' => $palvelut,
+                        'toimitilat' => $toimitilat,
+                        'asiakkaat' => $asiakkaat
+                    ));
         } else {        
             $varaus->save();
             Redirect::to('/', array('message' => 'Varaus tallennettu.'));
@@ -92,8 +103,19 @@ class VarausController extends BaseController {
         }
         
         if(count($errors) > 0){
+            $tyontekijat = Tyontekija::all();
+            $palvelut = Palvelu::all();
+            $toimitilat = Toimitila::all();
+            $asiakkaat = Asiakas::all();
             View::make('varaus/varaus_muokkaa.html', 
-                    array('errors' => $errors, 'varaus' => $varaus));
+                    array(
+                        'errors' => $errors, 
+                        'varaus' => $varaus,
+                        'tyontekijat' => $tyontekijat,
+                        'palvelut' => $palvelut,
+                        'toimitilat' => $toimitilat,
+                        'asiakkaat' => $asiakkaat
+                    ));
         } else {
             $varaus->update();
             Redirect::to('/varaus', array('message' => 
@@ -107,13 +129,5 @@ class VarausController extends BaseController {
         $varaus->destroy();        
         Redirect::to('/varaus', 
                 array('message' => 'Varaus poistettu.'));
-    }
-    
-    private static function checkAvailability($dimensio, $aloitusaika, $lopetusaika, $errors){
-        $issues = array();
-        
-        
-        $issues = array('error' => $error);
-        return array_merge($errors, $issues);
     }
 }

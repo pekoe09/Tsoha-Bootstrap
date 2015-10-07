@@ -13,7 +13,8 @@ class Varaus extends BaseModel {
     }
     
     public static function all(){
-        $statement = 'SELECT * FROM varaus';
+        $statement = 'SELECT * FROM varaus'
+                . ' ORDER BY aloitusaika DESC';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();
@@ -171,10 +172,31 @@ class Varaus extends BaseModel {
     
     public function check_overlaps(){
         $errors = array();
-        $dimensions = array(
+        
+        $statement = "SELECT COUNT(*) AS count FROM tyontekija_palvelu"
+                . " WHERE tyontekija_id = " . $this->tyontekija_id
+                . " AND palvelu_id = " . $this->palvelu_id;
+        $query = DB::connection()->prepare($statement);
+        $query->execute();
+        $row = $query->fetch();
+        if(!$row || $row['count'] == 0){
+            $errors[] = "Valitsemasi terapeutti ei tarjoa haluamaasi palvelua";
+        }
+        
+        $statement = "SELECT COUNT(*) AS count FROM toimitila_palvelu"
+                . " WHERE toimitila_id = " . $this->toimitila_id
+                . " AND palvelu_id = " . $this->palvelu_id;
+        $query = DB::connection()->prepare($statement);
+        $query->execute();
+        $row = $query->fetch();
+        if(!$row || $row['count'] == 0){
+            $errors[] = "Valitsemassasi toimipaikassa ei ole tarjolla haluamaasi palvelua";
+        }
+        
+        $dimensions = array(            
             'asiakas' => $this->asiakas_id,
             'tyontekija'  => $this->tyontekija_id,
-            'toimitila' => $this->toimitila_id
+            'toimitila' => $this->toimitila_id            
         );
         $input = array(
             'aloitusaika' => $this->aloitusaika,
@@ -184,25 +206,52 @@ class Varaus extends BaseModel {
         foreach($dimensions as $key => $value){
             $statement = "SELECT COUNT(*) AS count FROM varaus"
                     . " WHERE " . $key . "_id = " . $value
-                    . " AND ((aloitusaika <= :aloitusaika AND lopetusaika >= :aloitusaika)"
-                        . " OR (aloitusaika <= :lopetusaika AND lopetusaika >= :lopetusaika)"
+                    . " AND ((aloitusaika <= :aloitusaika AND lopetusaika > :aloitusaika)"
+                        . " OR (aloitusaika < :lopetusaika AND lopetusaika >= :lopetusaika)"
                         . " OR (aloitusaika >= :aloitusaika AND lopetusaika <= :lopetusaika))"
-                    . " AND NOT on_peruutettu";
-            $errors = array();
+                    . " AND on_peruutettu IS NOT TRUE";            
             $query = DB::connection()->prepare($statement);
             $query->execute($input);
             $row = $query->fetch();
             if($row && $row['count'] > 0){
                 $varattu;
-                if($key == 'asiakas')
+                if($key == 'asiakas'){
                     $varattu = 'Sinulla';
-                else if($key == 'tyontekija')
+                }else if($key == 'tyontekija'){
                     $varattu = 'Terapeutilla';
-                else
-                    $varattu = 'Toimitilassa';                        
+                }else{
+                    $varattu = 'Toimitilassa'; 
+                }
                 $errors[] = $varattu . " on toinen päällekäinen varaus; varausta ei voi tehdä.";
             }
         }
+        
+        // tarkistetaan vielä että varausaika mahtuu toimipaikan aukioloaikaan ja terapeutin työaikaan
+        $statement = "SELECT COUNT(*) AS count FROM aukiolopaiva"
+                . " WHERE toimitila_id = " . $this->toimitila_id
+                . " AND paiva = '" . date('Y-m-d', strtotime($this->aloitusaika)) . "'"
+                . " AND alkaen <= '" . date('H:i', strtotime($this->aloitusaika)) . "'"
+                . " AND asti >= '" . date('H:i', strtotime($this->lopetusaika)) . "'";
+        $query = DB::connection()->prepare($statement);
+        $query->execute();
+        $row = $query->fetch();
+        if(!$row || $row['count'] == 0){
+            $errors[] = "Toimitila ei ole auki valitsemanasi terapia-aikana (" 
+                    . date('H:i', strtotime($this->aloitusaika)) . " - " . date('H:i', strtotime($this->lopetusaika)) . ")";
+        }
+        
+        $statement = "SELECT COUNT(*) AS count FROM tyopaiva"
+                . " WHERE tyontekija_id = " . $this->tyontekija_id
+                . " AND paiva = '" . date('Y-m-d', strtotime($this->aloitusaika)) . "'"
+                . " AND alkaen <= '" . date('H:i', strtotime($this->aloitusaika)) . "'"
+                . " AND asti >= '" . date('H:i', strtotime($this->lopetusaika)) . "'";
+        $query = DB::connection()->prepare($statement);
+        $query->execute();
+        $row = $query->fetch();
+        if(!$row || $row['count'] == 0){
+            $errors[] = "Terapeutin työaika ei kata valitsemaasi terapia-aikaa (" 
+                    . date('H:i', strtotime($this->aloitusaika)) . " - " . date('H:i', strtotime($this->lopetusaika)) . ")";
+        }        
         
         return $errors;
     }
