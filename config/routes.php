@@ -169,5 +169,9 @@
   });
     
   $routes->get('/tilastot', function(){
-      HelloWorldController::tilastot();
+      TilastoController::index();
+  });
+  
+  $routes->post('/tilastot', function(){
+      TilastoController::getStats();
   });

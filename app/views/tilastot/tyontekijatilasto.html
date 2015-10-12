@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
+{% block content %}
+<h1>Tilastot työntekijöittäin</h1>
+
+{% if errors %}
+{{forms.error_div(errors)}}
+{% endif %}
+
+{% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
+<h3>Tilastojen aikaväli</h3>
+<form method="post" action="{{base_path}}/tilastot" class="form-horizontal">
+    <div class="form-group">
+        <label for="alkaen_pvm" class='col-sm-2 control-label'>Alkaen</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="alkaen_pvm" name="alkaen_pvm" type="date" value="{{"now"|date("Y-m-d")}}">
+        </div>
+    </div>
+        <div class="form-group">
+        <label for="asti_pvm" class='col-sm-2 control-label'>Asti</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="asti_pvm" name="asti_pvm" type="date" value="{{"now"|date("Y-m-d")}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type='submit' class='btn btn-primary'>Hae tiedot</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Nimi</td>
+            <td>Työaika (h)</td>
+            <td>Terapia-aika (h)</td>
+            <td>Terapia-käyntejä (kpl)</td>
+            <td>Myynti (€)</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for terapeuttitilasto in terapeuttitilastot %}
+        <tr>
+            <td>{{terapeuttitilasto.sukunimi ~ ', ' ~ terapeuttitilasto.etunimi}}</td>
+            <td>{{terapeuttitilasto.tyoaika}}</td>           
+            <td>{{terapeuttitilasto.terapia_aika}}</td>  
+            <td>{{terapeuttitilasto.terapia_kaynnit}}</td>  
+            <td>{{terapeuttitilasto.myynti}}</td>  
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

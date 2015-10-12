@@ -1,16 +1,16 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of tilasto_controller
- *
- * @author juha
- */
-class TilastoController {
-    //put your code here
+class TilastoController extends BaseController{
+    
+    public static function index(){
+        self::check_logged_in(array('johtaja'));
+        View::make('tilastot/tyontekijatilasto.html');
+    }  
+    
+    public static function getStats(){
+        self::check_logged_in(array('johtaja'));
+        $params = $_POST;
+        $terapeuttitilastot = Terapeuttitilasto::allForPeriod($params['alkaen_pvm'], $params['asti_pvm']);
+        View::make('tilastot/tyontekijatilasto.html', array('terapeuttitilastot' => $terapeuttitilastot));
+    }  
 }
