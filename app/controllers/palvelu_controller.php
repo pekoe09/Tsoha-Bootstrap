@@ -41,8 +41,13 @@ class PalveluController extends BaseController{
         $errors = $palvelu->errors();
         
         if(count($errors) > 0){
-            View::make('palvelu/palvelu_lisaa.html',
-                    array('errors' => $errors, 'palvelu' => $palvelu));
+//            View::make('palvelu/palvelu_lisaa.html',
+//                    array('errors' => $errors, 'palvelu' => $palvelu));
+            $response = json_encode(array(
+                'errors' => $errors,
+                'palvelu' => $palvelu
+            ));
+            echo '[' . $response . ']';
         } else {
             // tallennetaan ensin palvelu, sitten sen liitännäistiedot
             $palvelu->save();   

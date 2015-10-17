@@ -51,8 +51,10 @@ $(document).ready(function(){
            contentType: "application/json; charset=UTF-8",
            dataType: "json",
            success: function(result){
-               //alert(result[0].redirect);
                window.location = result[0].redirect;
+           }
+           error: function(response){
+               
            }
         });
         

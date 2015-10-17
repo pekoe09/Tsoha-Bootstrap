@@ -84,7 +84,19 @@
     
     public function validate_time($item_name, $time, $min_value, $max_value, $is_optional){
         $issues = array();
-        // toteutettava
+        if($time == null || $time == ''){
+            if(!$is_optional){
+                $issues[] = $item_name . ' ei saa olla tyhjä';
+            }
+        }else{        
+            list($tunnit, $minuutit, $sekunnit) = sscanf($time, '%d:%d:%d');
+            $kesto = new DateInterval(sprintf('PT%dH%dM', $tunnit, $minuutit));
+            if($min_value != null && $kesto < $min_value){
+                $issues[] = $item_name . ': arvon oltava vähintään ' . $min_value . '.';
+            } else if($max_value != null && $kesto > $max_value){
+                $issues[] = $item_name . ': arvon oltava enintään ' . $max_value . '.';
+            }
+        }
         return $issues;
     }
     
