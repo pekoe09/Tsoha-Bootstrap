@@ -9,7 +9,7 @@ Yleisiä linkkejä:
 
 Aiheena on valmiina ollut aihe ["Palvelubisnes"](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Palvelubisnes.html).
 
-Valmisaiheeseen verrattuna toteutettavassa sovelluksessa asiakkaan tulee kuitenkin rekisteröityä voidakseen varata palveluajan. Asiakkaasta tallennetaan perusyhteystiedot ja rekisteröitynyt asiakas voi sisäänkirjauduttuaan myös selata tekemiään varauksia ja peruuttaa niitä (jos varausaika on tulevaisuudessa). Sisäänkirjautumaton asiakas voi vain selata palveluiden tietoja sekä firman yleisesittelyä. Työntekijät voivat etsiä asiakkaiden varauksia ja peruuttaa niitä.
+Valmisaiheeseen verrattuna toteutettavassa sovelluksessa asiakkaan tulee kuitenkin rekisteröityä voidakseen varata palveluajan. Asiakkaasta tallennetaan perusyhteystiedot ja rekisteröitynyt asiakas voi sisäänkirjauduttuaan myös selata tekemiään varauksia. Sisäänkirjautumaton asiakas voi vain selata palveluiden tietoja sekä firman yleisesittelyä. Työntekijät voivat etsiä asiakkaiden varauksia ja peruuttaa niitä.
 
 ## Päivitykset viikolla 2
 
@@ -51,3 +51,9 @@ Käyttäjän sisäänkirjautuminen sekä uloskirjautuminen on toteutettu. Sisä�
 Kontrollereihin on lisätty metodien yhteyteen tarkistukset sisäänkirjautuneisuudesta; tarkistuksessa huomioidaan myös, onko käyttäjä asiakas, työntekijä vai johtaja. Uloskirjautumistoiminnallisuus toteutettiin jo edellisellä viikolla.
 
 Palveluun liittyvien toimipaikkojen ja työntekijöiden tallennus palvelun tallennuksen yhteydessä toteutettu; lisätty myös palvelun tietojen muokkausnäkymä. Palvelun tallennuksen ja muokkauksen yhteydessä oleva näkymän päivittymisongelma on kuitenkin edelleen korjaamatta (kts kommentti viikkoa 4 koskevan osion alussa). Korjattu edelleen bugeja. Dokumentaatioon on lisätty kaavio käyttöliittymäkomponenteista sekä järjestelmän yleisrakennekuvaus.
+
+## Päivitykset viikoilla 6-7
+
+Palvelun tallennuksen ja muokkauksen uudelleenohjaus laitettu kuntoon, samoin validointiherjojen näyttäminen näissä. 
+Varauksen tekoon on lisätty js-pätkä, jossa haetaan kulloinkin valittuun palveluun sopivat toimitilat ja terapeutit ajax-kutsuilla ja päivitetään nämä ao. alasvetovalikoihin. Jos sopivia toimitiloja ja/tai terapeutteja ei ole ja valikko jää tyhjäksi, tästä näytetään erillinen viesti näkymässä ja submit-nappi lukitaan kunnes käyttäjä valitsee palvelun, jolle löytyy sekä toimitiloja että terapeutteja.
+Lisätty johtajan käyttöön tilastot, joista ilmenee valitulla aikavälillä terapiakäyntien lkm, niihin käytetty aika, kokonaistyöaika sekä terapiakäyntien laskutuksen summa terapeuteittain.
