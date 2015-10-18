@@ -41,13 +41,11 @@ class PalveluController extends BaseController{
         $errors = $palvelu->errors();
         
         if(count($errors) > 0){
-//            View::make('palvelu/palvelu_lisaa.html',
-//                    array('errors' => $errors, 'palvelu' => $palvelu));
             $response = json_encode(array(
-                'errors' => $errors,
-                'palvelu' => $palvelu
+                'status' => 'error',
+                'errors' => $errors
             ));
-            echo '[' . $response . ']';
+            echo $response;
         } else {
             // tallennetaan ensin palvelu, sitten sen liitännäistiedot
             $palvelu->save();   
@@ -58,13 +56,11 @@ class PalveluController extends BaseController{
             
             // näkymän ajax-kutsulle palautetaan uudelleenohjausosoite, jotta se voi hoitaa ohjauksen
             $redirection = json_encode(array(
+                'status' => 'success',
                 'redirect' => urlencode($palvelu->id), 
                 array('message' => 'Palvelu tallennettu')
                 ));
-            echo '[' . $redirection . ']';
-            
-            //Redirect::to('/palvelu', array('message' => 'Palvelu tallennettu.'));
-//            Redirect::to('/palvelu/' . $palvelu->id, array('message' => 'Palvelu tallennettu.'));
+            echo $redirection;
         }
     }    
     
@@ -95,8 +91,11 @@ class PalveluController extends BaseController{
         $errors = $palvelu->errors();
         
         if(count($errors) > 0){
-            View::make('palvelu/palvelu_muokkaa.html', 
-                    array('errors' => $errors, 'palvelu' => $palvelu));
+            $response = json_encode(array(
+                'status' => 'error',
+                'errors' => $errors
+            ));
+            echo $response;
         } else {
             // tallennetaan ensin palvelu, sitten sen liitännäistiedot            
             $palvelu->update();
@@ -105,13 +104,11 @@ class PalveluController extends BaseController{
             
             // näkymän ajax-kutsulle palautetaan uudelleenohjausosoite, jotta se voi hoitaa ohjauksen
             $redirection = json_encode(array(
-                'redirect' => urlencode($palvelu->id), 
+                'status' => 'success',
+                'redirect' => '/palvelu', 
                 array('message' => 'Palvelu tallennettu')
                 ));
-            echo '[' . $redirection . ']';
-            
-//            Redirect::to('/palvelu', array('message' => 
-//                'Palvelun (' . $palvelu->nimi . ') tiedot päivitetty!'));
+            echo $redirection;
         }
     }
     
@@ -128,5 +125,21 @@ class PalveluController extends BaseController{
             Redirect::to('/palvelu', 
                     array('message' => 'Palvelu (' . $palvelu->nimi . ') poistettu.'));
         }
+    }
+    
+    public static function findResources(){
+        self::check_logged_in(array("johtaja", "tyontekija", "asiakas"));
+        $request = file_get_contents('php://input');
+        $input = json_decode($request, true);
+        
+        $toimitilat = Toimitila::findForService($input['palvelu_id']);
+        $tyontekijat = Tyontekija::findForService($input['palvelu_id']);
+        
+        $response = json_encode(array(
+            'toimitilat' => $toimitilat,
+            'tyontekijat' => $tyontekijat
+        ));
+        
+        echo $response;
     }
 }

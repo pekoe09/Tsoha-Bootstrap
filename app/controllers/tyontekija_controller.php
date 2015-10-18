@@ -51,7 +51,7 @@ class TyontekijaController extends BaseController {
                     array('errors' => $errors, 'tyontekija' => $tyontekija));
         }  else {
             $tyontekija->save();        
-            Redirect::to('/tyontekija/' . $tyontekija->id, array('message' => 'Työntekijä tallennettu.'));
+            Redirect::to('/tyontekija', array('message' => 'Työntekijä tallennettu.'));
         }
     }
         

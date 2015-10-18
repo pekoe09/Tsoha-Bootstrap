@@ -90,7 +90,7 @@ class Palvelu extends BaseModel {
     }
         
     public function update(){
-        $statement = 'UPDATE palvelu SET "nimi" = :nimi, "kesto" = :kesto, "kuvaus" = :kuvaus,'
+        $statement = 'UPDATE palvelu SET "nimi" = :nimi, "kesto" = :kesto, "kuvaus" = :kuvaus'
                 . ' WHERE "id" = :id';
         $query = DB::connection()->prepare($statement);
         $query->execute(array(

@@ -2,13 +2,14 @@
 {% block content %}
 <h1>Muokkaa palvelua</h1>
 
-{% if errors %}
-{{forms.error_div(errors)}}
-{% endif %}
+<div class="alert alert-danger" id="error-div" style="display:none">
+    <ul id="errorlist">
+    </ul>
+</div>
 
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <form class="form-horizontal">
-    <input type="hidden" value="{{palvelu.id}}">
+    <input type="hidden" name="palveluid" id="palveluid" value="{{palvelu.id}}">
     <div class="form-group">
         <label for="nimi" class="col-sm-2 control-label">Nimi</label>
         <div class="col-sm-10">

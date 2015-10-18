@@ -30,6 +30,7 @@ $(document).ready(function(){
         
         // paketoi käyttäjän antamat tiedot olioksi
         var saveData = {
+            id: $('#palveluid').val(),
             nimi: $('#nimi').val(),
             kesto: $('#kesto').val(),
             kuvaus: $('#kuvaus').val(),
@@ -41,8 +42,8 @@ $(document).ready(function(){
         // ajax-pyynnön url riippuu siitä, onko kyseessä uuden palvelun tallennus vai
         // olemassa olevan palvelun muutos
         var url = "http://jpkangas.users.cs.helsinki.fi/vallila/palvelu";
-        if(document.getElementById('palvelu_id'))
-            url = url + "/" + document.getElementById('palvelu_id').val() + "/muokkaa";
+        if($('#palveluid').val() != null && $('#palveluid').val() > 0)
+            url = url + "/" + $('#palveluid').val() + "/muokkaa";
 
         $.ajax({
            type: "POST",
@@ -51,13 +52,20 @@ $(document).ready(function(){
            contentType: "application/json; charset=UTF-8",
            dataType: "json",
            success: function(result){
-               window.location = result[0].redirect;
-           }
-           error: function(response){
-               
+                if(result.status == 'success'){
+                    if(result.redirect == '/palvelu')
+                        window.location = "http://jpkangas.users.cs.helsinki.fi/vallila/palvelu";
+                    else
+                        window.location = result.redirect;
+                } else {
+                    var errors = [];
+                    $.each(result.errors, function(id, error){
+                       errors.push('<li>' + error  + '</li>') 
+                    });
+                    $('#errorlist').html(errors.join(''));
+                    $('#error-div').removeAttr("style");
+                }
            }
         });
-        
-//        return false;
     }
 });

@@ -2,9 +2,10 @@
 {% block content %}
 <h1>Lisää palvelu</h1>
 
-{% if errors %}
-{{forms.error_div(errors)}}
-{% endif %}
+<div class="alert alert-danger" id="error-div" style="display:none">
+    <ul id="errorlist">
+    </ul>
+</div>
 
 {% if message is not empty %}<div class="alert alert-success">{{message}}</div>{% endif %}
 <form class="form-horizontal">

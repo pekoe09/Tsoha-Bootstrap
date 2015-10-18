@@ -52,6 +52,10 @@
       PalveluController::destroy($id);
   });
   
+  $routes->post('/palvelu/sopivat', function(){
+      PalveluController::findResources();
+  });
+  
   $routes->get('/tyontekija', function(){
       TyontekijaController::index();
   });
